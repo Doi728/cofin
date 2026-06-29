@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Accounting — ทบทวนก่อนสอบ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --accent5: #ffa657;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --yellow: #e3b341;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #nav::-webkit-scrollbar { display: none; }
+  #nav .brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 600;
+    color: var(--accent); padding: 14px 20px;
+    white-space: nowrap; flex-shrink: 0;
+    border-right: 1px solid var(--border);
+  }
+  .nav-tabs { display: flex; gap: 0; flex-shrink: 0; }
+  .nav-tab {
+    padding: 14px 16px;
+    font-size: 13px; cursor: pointer;
+    color: var(--muted); white-space: nowrap;
+    border: none; background: none;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-right {
+    margin-left: auto; padding: 0 20px;
+    display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .progress-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 4px 12px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .progress-pill span { color: var(--accent2); }
+
+  /* MAIN */
+  main { padding-top: 53px; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== HOME ===== */
+  #home {
+    min-height: calc(100vh - 53px);
+    display: flex; flex-direction: column;
+  }
+  .hero {
+    padding: 60px 40px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .15em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero-title em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.6;
+  }
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px; background: var(--border);
+    border-top: 1px solid var(--border);
+    flex: 1;
+  }
+  .chapter-card {
+    background: var(--bg);
+    padding: 28px;
+    cursor: pointer;
+    transition: background .15s;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .chapter-card:hover { background: var(--surface); }
+  .chapter-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--muted);
+    letter-spacing: .1em;
+  }
+  .chapter-name { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .chapter-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .chapter-concepts {
+    margin-top: 4px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .concept-tag {
+    font-size: 11px; padding: 2px 8px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ===== CONTENT VIEW ===== */
+  .content-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 53px);
+  }
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky; top: 53px;
+    height: calc(100vh - 53px);
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: 11px; letter-spacing: .1em;
+    color: var(--muted); text-transform: uppercase;
+    padding: 0 20px 8px;
+  }
+  .sidebar-item {
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 13px; color: var(--muted);
+    transition: all .15s;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-item:hover { color: var(--text); background: var(--surface); }
+  .sidebar-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--surface); }
+  .content-area { padding: 36px 48px; max-width: 900px; }
+
+  /* sections */
+  .section { display: none; }
+  .section.active { display: block; }
+  .section-title {
+    font-size: 24px; font-weight: 700; margin-bottom: 6px;
+  }
+  .section-subtitle {
+    font-size: 14px; color: var(--muted); margin-bottom: 28px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  }
+
+  /* concept blocks */
+  .concept-block { margin-bottom: 24px; }
+  .concept-header {
+    font-size: 15px; font-weight: 600; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .concept-body {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px;
+    font-size: 14px; line-height: 1.75;
+  }
+
+  /* callout boxes */
+  .callout {
+    border-radius: 8px; padding: 16px 20px;
+    margin: 16px 0; font-size: 13px; line-height: 1.7;
+  }
+  .callout.example {
+    background: rgba(88,166,255,.08);
+    border-left: 3px solid var(--accent);
+  }
+  .callout.formula {
+    background: rgba(63,185,80,.08);
+    border-left: 3px solid var(--accent2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+  .callout.warning {
+    background: rgba(247,129,102,.08);
+    border-left: 3px solid var(--accent3);
+  }
+  .callout.tip {
+    background: rgba(210,168,255,.08);
+    border-left: 3px solid var(--accent4);
+  }
+  .callout-head {
+    font-weight: 600; margin-bottom: 8px; font-size: 12px;
+    letter-spacing: .05em; text-transform: uppercase;
+  }
+  .callout.example .callout-head { color: var(--accent); }
+  .callout.formula .callout-head { color: var(--accent2); }
+  .callout.warning .callout-head { color: var(--accent3); }
+  .callout.tip .callout-head { color: var(--accent4); }
+
+  /* ratio table */
+  .ratio-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .ratio-table th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    font-size: 11px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 600;
+  }
+  .ratio-table td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    line-height: 1.55;
+  }
+  .ratio-table tr:hover td { background: var(--surface); }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+  .good { color: var(--accent2); }
+  .bad { color: var(--accent3); }
+  .star { color: var(--yellow); }
+
+  /* ===== FLASHCARDS ===== */
+  .fc-container {
+    max-width: 680px; margin: 0 auto;
+    padding: 40px 20px;
+    min-height: calc(100vh - 53px);
+    display: flex; flex-direction: column;
+  }
+  .fc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .fc-header h2 { font-size: 20px; font-weight: 700; }
+  .fc-filter-row {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .filter-btn {
+    padding: 6px 14px; border-radius: 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); font-size: 12px; cursor: pointer;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    transition: all .15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: #000;
+  }
+  .card-wrap {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+  }
+  .flashcard {
+    width: 100%; perspective: 1000px;
+  }
+  .card-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+    min-height: 220px;
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; top: 0; left: 0; right: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 36px;
+    display: flex; flex-direction: column;
+    min-height: 220px;
+  }
+  .card-back { transform: rotateY(180deg); background: var(--surface2); }
+  .card-tag {
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted); margin-bottom: 16px;
+    text-transform: uppercase; letter-spacing: .1em;
+  }
+  .card-q {
+    font-size: 18px; font-weight: 600; line-height: 1.5;
+    flex: 1; display: flex; align-items: center;
+  }
+  .card-hint {
+    font-size: 12px; color: var(--muted); margin-top: 20px;
+    text-align: center;
+  }
+  .card-a {
+    font-size: 15px; line-height: 1.7; flex: 1;
+    display: flex; align-items: flex-start; flex-direction: column;
+    gap: 12px;
+  }
+  .card-a .mono {
+    background: var(--bg); padding: 10px 14px;
+    border-radius: 6px; border: 1px solid var(--border);
+    width: 100%;
+  }
+  .fc-controls {
+    display: flex; gap: 12px; margin-top: 28px;
+    justify-content: center;
+  }
+  .btn {
+    padding: 10px 24px; border-radius: 8px;
+    font-size: 14px; cursor: pointer;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-weight: 600; transition: all .15s; border: none;
+  }
+  .btn-ghost {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface2); }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #79c0ff; }
+  .btn-danger { background: rgba(247,129,102,.15); color: var(--accent3); border: 1px solid var(--accent3); }
+  .btn-success { background: rgba(63,185,80,.15); color: var(--accent2); border: 1px solid var(--accent2); }
+  .fc-progress {
+    text-align: center; margin-bottom: 20px;
+    font-size: 13px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .fc-progress b { color: var(--text); }
+  .fc-result {
+    display: none; text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 48px;
+  }
+  .fc-result h3 { font-size: 22px; margin-bottom: 12px; }
+  .fc-result .score { font-size: 56px; font-weight: 700; color: var(--accent2); margin: 20px 0; }
+  .fc-score-row { display: flex; gap: 24px; justify-content: center; margin-bottom: 24px; }
+  .fc-score-item { font-size: 13px; color: var(--muted); }
+  .fc-score-item b { display: block; font-size: 24px; color: var(--text); }
+
+  /* ===== QUIZ ===== */
+  .quiz-container {
+    max-width: 760px; margin: 0 auto;
+    padding: 40px 20px;
+    min-height: calc(100vh - 53px);
+  }
+  .quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .quiz-header h2 { font-size: 20px; font-weight: 700; }
+  .quiz-bar {
+    height: 4px; background: var(--surface2);
+    border-radius: 2px; margin-bottom: 36px; overflow: hidden;
+  }
+  .quiz-bar-fill {
+    height: 100%; background: var(--accent);
+    border-radius: 2px; transition: width .3s;
+  }
+  .quiz-q-block { margin-bottom: 24px; }
+  .quiz-q-num {
+    font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: .1em; margin-bottom: 10px;
+  }
+  .quiz-q-text { font-size: 18px; font-weight: 600; line-height: 1.55; }
+  .quiz-q-context {
+    font-size: 13px; color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px;
+    margin-top: 12px; line-height: 1.6;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .quiz-choices { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .quiz-choice {
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px; cursor: pointer;
+    font-size: 14px; line-height: 1.5;
+    transition: all .15s;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    text-align: left; color: var(--text);
+  }
+  .quiz-choice:hover:not(:disabled) { border-color: var(--accent); background: var(--surface2); }
+  .quiz-choice.correct { background: rgba(63,185,80,.12); border-color: var(--accent2); color: var(--accent2); }
+  .quiz-choice.wrong { background: rgba(247,129,102,.12); border-color: var(--accent3); color: var(--accent3); }
+  .quiz-choice:disabled { cursor: default; }
+  .quiz-explanation {
+    display: none;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px; margin-bottom: 24px;
+    font-size: 14px; line-height: 1.7;
+  }
+  .quiz-explanation.visible { display: block; }
+  .exp-label { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent2); font-weight: 700; margin-bottom: 8px; }
+  .quiz-nav { display: flex; gap: 12px; }
+  .quiz-result { display: none; text-align: center; }
+  .quiz-result.visible { display: block; }
+  .quiz-result h3 { font-size: 26px; font-weight: 700; margin-bottom: 24px; }
+  .result-score {
+    font-size: 72px; font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .result-label { font-size: 15px; color: var(--muted); margin-top: 8px; margin-bottom: 32px; }
+  .result-review { margin-top: 24px; text-align: left; }
+  .result-item { padding: 14px; border-radius: 8px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+  .result-item.correct-item { background: rgba(63,185,80,.08); border: 1px solid rgba(63,185,80,.3); }
+  .result-item.wrong-item { background: rgba(247,129,102,.08); border: 1px solid rgba(247,129,102,.3); }
+  .result-q { font-weight: 600; margin-bottom: 6px; }
+  .result-a { color: var(--muted); }
+
+  /* ===== RATIO REF ===== */
+  .ratio-ref-container {
+    padding: 36px 48px; max-width: 1100px;
+  }
+  .ratio-ref-container h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .ratio-ref-container p { color: var(--muted); font-size: 14px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .ratio-group { margin-bottom: 36px; }
+  .ratio-group-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em;
+    padding: 8px 0; margin-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .ratio-group:nth-child(2) .ratio-group-title { color: var(--accent); border-color: var(--accent); }
+  .ratio-group:nth-child(3) .ratio-group-title { color: var(--accent2); border-color: var(--accent2); }
+  .ratio-group:nth-child(4) .ratio-group-title { color: var(--accent4); border-color: var(--accent4); }
+  .ratio-group:nth-child(5) .ratio-group-title { color: var(--accent5); border-color: var(--accent5); }
+  .ratio-group:nth-child(6) .ratio-group-title { color: var(--accent3); border-color: var(--accent3); }
+
+  /* ===== FLOWCHART ===== */
+  .flow-container {
+    padding: 36px 48px; max-width: 900px;
+  }
+  .flow-container h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .flow-container > p { color: var(--muted); font-size: 14px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .flow-section { margin-bottom: 40px; }
+  .flow-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
+  .flow-chain {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    font-size: 13px;
+  }
+  .flow-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    line-height: 1.4;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .flow-node.highlight { background: rgba(88,166,255,.12); border-color: var(--accent); color: var(--accent); }
+  .flow-node.highlight2 { background: rgba(63,185,80,.12); border-color: var(--accent2); color: var(--accent2); }
+  .flow-node.highlight3 { background: rgba(247,129,102,.12); border-color: var(--accent3); color: var(--accent3); }
+  .flow-arrow { color: var(--muted); font-size: 18px; }
+  .flow-minus { color: var(--accent3); font-weight: 700; }
+  .flow-plus { color: var(--accent2); font-weight: 700; }
+  .flow-equals { color: var(--yellow); font-weight: 700; }
+
+  /* general layout helpers */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px;
+    font-size: 13px; line-height: 1.6;
+  }
+  .stat-box .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+  .stat-box .value { font-size: 22px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .sep { height: 1px; background: var(--border); margin: 24px 0; }
+  @media (max-width: 768px) {
+    .content-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    .content-area { padding: 24px 20px; }
+    .ratio-ref-container { padding: 24px 20px; }
+    .flow-container { padding: 24px 20px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .hero { padding: 40px 20px 30px; }
+    .chapter-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">FA // Vernimmen</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">📚 เนื้อหา</button>
+    <button class="nav-tab" onclick="showPage('flashcard')">🃏 Flashcard</button>
+    <button class="nav-tab" onclick="showPage('quiz')">📝 Quiz</button>
+    <button class="nav-tab" onclick="showPage('ratioref')">📊 Ratio Ref</button>
+    <button class="nav-tab" onclick="showPage('flowchart')">🗺️ Flowchart</button>
+  </div>
+  <div class="nav-right">
+    <div class="progress-pill">Quiz: <span id="quizScoreNav">0/0</span></div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ========== HOME / CONTENT ========== -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-eyebrow">Corporate Finance — Vernimmen CH. 1–14</div>
+    <h1 class="hero-title">Financial<br><em>Accounting</em><br>Review</h1>
+    <p class="hero-sub">ทบทวนให้เข้าใจ ไม่ใช่แค่จำ — ครอบคลุมทุกแนวคิดสำคัญจาก Vernimmen Ch.1–14 พร้อม Flashcard, Quiz และ Flowchart</p>
+  </div>
+  <div class="chapter-grid">
+    <div class="chapter-card" onclick="openChapter('ch1')">
+      <div class="chapter-num">บทที่ 1</div>
+      <div class="chapter-name">Corporate Finance คืออะไร?</div>
+      <div class="chapter-desc">3 การตัดสินใจหลักของ CFO, Value Creation, ประเภทหลักทรัพย์และตลาด</div>
+      <div class="chapter-concepts"><span class="concept-tag">WACC</span><span class="concept-tag">ROCE</span><span class="concept-tag">Value</span><span class="concept-tag">Securities</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch2')">
+      <div class="chapter-num">บทที่ 2</div>
+      <div class="chapter-name">Cash Flow — กระแสเงินสด</div>
+      <div class="chapter-desc">Cash is King — 4 วงจรเงินสด, Operating Cycle ตาม Industry และ Free Cash Flow</div>
+      <div class="chapter-concepts"><span class="concept-tag">FCF</span><span class="concept-tag">Operating CF</span><span class="concept-tag">Capex</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch3')">
+      <div class="chapter-num">บทที่ 3</div>
+      <div class="chapter-name">Earnings — Income Statement</div>
+      <div class="chapter-desc">EBITDA → EBIT → Net Income, By-Nature vs By-Function, Value Added</div>
+      <div class="chapter-concepts"><span class="concept-tag">EBITDA</span><span class="concept-tag">EBIT</span><span class="concept-tag">Value Added</span><span class="concept-tag">Recurring</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch4')">
+      <div class="chapter-num">บทที่ 4</div>
+      <div class="chapter-name">Balance Sheet — งบดุล</div>
+      <div class="chapter-desc">Capital Employed vs Invested Capital, Working Capital, Liquidity & Solvency</div>
+      <div class="chapter-concepts"><span class="concept-tag">CE</span><span class="concept-tag">Net Debt</span><span class="concept-tag">WC</span><span class="concept-tag">NAV</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch5')">
+      <div class="chapter-num">บทที่ 5</div>
+      <div class="chapter-name">Earnings → Cash Flow</div>
+      <div class="chapter-desc">ทำไมกำไร ≠ Cash, Reconciliation Table และ EBITDA → Net Debt Change</div>
+      <div class="chapter-concepts"><span class="concept-tag">D&A</span><span class="concept-tag">△WC</span><span class="concept-tag">Reconciliation</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch6')">
+      <div class="chapter-num">บทที่ 6–7</div>
+      <div class="chapter-name">Consolidated Accounts</div>
+      <div class="chapter-desc">Full Consolidation + Minority Interest, Equity Method, Goodwill, IFRS 16, Deferred Tax</div>
+      <div class="chapter-concepts"><span class="concept-tag">Goodwill</span><span class="concept-tag">Minority</span><span class="concept-tag">IFRS 16</span><span class="concept-tag">Deferred Tax</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch8')">
+      <div class="chapter-num">บทที่ 8</div>
+      <div class="chapter-name">How to Perform Financial Analysis</div>
+      <div class="chapter-desc">7 ขั้นตอน, 4-Stage Roadmap และ Techniques (Trend/Cross-sectional)</div>
+      <div class="chapter-concepts"><span class="concept-tag">7 Steps</span><span class="concept-tag">Red Flag</span><span class="concept-tag">4 Stages</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch9')">
+      <div class="chapter-num">บทที่ 9–10</div>
+      <div class="chapter-name">Margin Analysis</div>
+      <div class="chapter-desc">Sales Growth, Scissors Effect, Operating Leverage, Breakeven</div>
+      <div class="chapter-concepts"><span class="concept-tag">Margin</span><span class="concept-tag">DOL</span><span class="concept-tag">Breakeven</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch11')">
+      <div class="chapter-num">บทที่ 11</div>
+      <div class="chapter-name">Working Capital & Capex</div>
+      <div class="chapter-desc">DSO, DPO, DIO, CCC, Negative WC และ Maintenance vs Growth Capex</div>
+      <div class="chapter-concepts"><span class="concept-tag">DSO</span><span class="concept-tag">DPO</span><span class="concept-tag">CCC</span><span class="concept-tag">Capex</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch12')">
+      <div class="chapter-num">บทที่ 12</div>
+      <div class="chapter-name">Financing — โครงสร้างหนี้</div>
+      <div class="chapter-desc">Net Debt/EBITDA, ICR, Dynamic vs Static Analysis</div>
+      <div class="chapter-concepts"><span class="concept-tag">Net Debt</span><span class="concept-tag">ICR</span><span class="concept-tag">Gearing</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch13')">
+      <div class="chapter-num">บทที่ 13</div>
+      <div class="chapter-name">ROCE & ROE — Profitability</div>
+      <div class="chapter-desc">Leverage Effect, การแยกองค์ประกอบ ROCE</div>
+      <div class="chapter-concepts"><span class="concept-tag">ROCE</span><span class="concept-tag">Leverage Effect</span><span class="concept-tag">ROE</span></div>
+    </div>
+    <div class="chapter-card" onclick="openChapter('ch14')">
+      <div class="chapter-num">บทที่ 14</div>
+      <div class="chapter-name">Conclusion — สรุปการวิเคราะห์</div>
+      <div class="chapter-desc">5 คำถามหลัก และ 6 หลักการอ่าน Ratio</div>
+      <div class="chapter-concepts"><span class="concept-tag">5 Questions</span><span class="concept-tag">Best Practice</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CHAPTER VIEW ========== -->
+<div id="chapterView" class="page">
+  <div class="content-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="content-area" id="contentArea"></div>
+  </div>
+</div>
+
+<!-- ========== FLASHCARD ========== -->
+<div id="flashcard" class="page">
+  <div class="fc-container">
+    <div class="fc-header">
+      <h2>🃏 Flashcard — ทดสอบความเข้าใจ</h2>
+    </div>
+    <div class="fc-filter-row" id="fcFilters"></div>
+    <div class="fc-progress" id="fcProgress"></div>
+    <div class="card-wrap" id="cardWrap">
+      <div class="flashcard">
+        <div class="card-inner" id="cardInner" onclick="flipCard()">
+          <div class="card-face card-front" id="cardFront">
+            <div class="card-tag" id="cardTag"></div>
+            <div class="card-q" id="cardQ"></div>
+            <div class="card-hint">แตะเพื่อดูคำตอบ 👆</div>
+          </div>
+          <div class="card-face card-back" id="cardBack">
+            <div class="card-tag" id="cardTagB"></div>
+            <div class="card-a" id="cardA"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-result" id="fcResult">
+      <h3>🎯 รอบนี้เสร็จแล้ว!</h3>
+      <div class="score" id="fcFinalScore"></div>
+      <p style="color:var(--muted);margin-bottom:24px;">คะแนนที่ได้</p>
+      <div class="fc-score-row">
+        <div class="fc-score-item"><b id="fcGood" class="good">0</b>รู้แล้ว ✓</div>
+        <div class="fc-score-item"><b id="fcBad" class="bad">0</b>ต้องทบทวน ✗</div>
+      </div>
+      <button class="btn btn-primary" onclick="resetFlashcards()">เริ่มใหม่</button>
+    </div>
+    <div class="fc-controls" id="fcControls">
+      <button class="btn btn-danger" onclick="rateCard(false)">✗ ยังไม่แน่ใจ</button>
+      <button class="btn btn-ghost" onclick="skipCard()">ข้าม →</button>
+      <button class="btn btn-success" onclick="rateCard(true)">✓ รู้แล้ว</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="quiz" class="page">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h2>📝 Quiz — ทดสอบการเข้าใจ</h2>
+      <div class="fc-filter-row" id="quizFilters" style="margin:0"></div>
+    </div>
+    <div class="quiz-bar"><div class="quiz-bar-fill" id="quizBar" style="width:0%"></div></div>
+    <div id="quizArea"></div>
+    <div class="quiz-result" id="quizResult">
+      <h3>🎓 ผลการทดสอบ</h3>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-label" id="resultLabel"></div>
+      <button class="btn btn-primary" onclick="startQuiz()" style="margin-bottom:24px">ลองใหม่อีกรอบ</button>
+      <div class="result-review" id="resultReview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RATIO REF ========== -->
+<div id="ratioref" class="page">
+  <div class="ratio-ref-container">
+    <h2>📊 Master Ratio Reference</h2>
+    <p>สูตรครบ + วิธีแปรผลทุก Ratio — ทบทวนก่อนสอบ</p>
+    <div id="ratioRefContent"></div>
+  </div>
+</div>
+
+<!-- ========== FLOWCHART ========== -->
+<div id="flowchart" class="page">
+  <div class="flow-container">
+    <h2>🗺️ Flowchart — ภาพรวมสูตรและความสัมพันธ์</h2>
+    <p>เส้นทางเชื่อมโยงระหว่างตัวเลขทางการเงิน ดูเพื่อเข้าใจภาพรวมก่อนสอบ</p>
+    <div id="flowContent"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// =====================================================================
+// DATA
+// =====================================================================
+const chapters = {
+  ch1: {
+    title: 'Corporate Finance คืออะไร?',
+    subtitle: 'บทที่ 1 — ทำไมถึงต้องเรียนวิชานี้',
+    sections: [
+      { id: 'core', label: 'Core Idea: Value Creation', content: `
+        <div class="concept-block">
+          <div class="concept-header">🎯 เป้าหมายหลักของบริษัท</div>
+          <div class="concept-body">
+            บริษัทมีอยู่เพื่อ <strong>สร้างมูลค่า (Value Creation)</strong> ไม่ใช่แค่ทำกำไร เพราะกำไรบัญชีอาจไม่ได้หมายถึงการสร้างมูลค่าที่แท้จริง
+          </div>
+        </div>
+        <div class="callout example">
+          <div class="callout-head">💡 กำไร ≠ การสร้างมูลค่า</div>
+          บริษัท A: กำไร 10 ล้าน, ลงทุน 200 ล้าน → ผลตอบแทน <strong>5%</strong><br>
+          ฝากธนาคาร 200 ล้าน ดอกเบี้ย 7% → ได้ <strong>14 ล้าน</strong><br><br>
+          บริษัท A มีกำไร <em>แต่กำลังทำลายมูลค่า!</em> เพราะผลตอบแทนต่ำกว่าทางเลือกอื่น
+        </div>
+        <div class="callout formula">
+          <div class="callout-head">📐 Value Creation Formula</div>
+          Value Creation = ผลตอบแทน (ROCE) > ต้นทุนของเงินทุน (Cost of Capital / WACC)
+        </div>
+      ` },
+      { id: 'cfo', label: '3 การตัดสินใจหลัก CFO', content: `
+        <div class="concept-block">
+          <div class="concept-header">👔 3 การตัดสินใจหลักของ CFO</div>
+        </div>
+        <div class="grid3">
+          <div class="stat-box">
+            <div class="label">Investment Decision</div>
+            <div style="font-size:14px;margin-top:8px;line-height:1.6">ลงทุนในสินทรัพย์ใดที่ให้ผลตอบแทน <strong>> ต้นทุนทุน?</strong></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Financing Decision</div>
+            <div style="font-size:14px;margin-top:8px;line-height:1.6">จัดหาเงินทุนจากไหน — <strong>หนี้</strong> หรือ <strong>ทุน</strong> ในสัดส่วนใด?</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Dividend Decision</div>
+            <div style="font-size:14px;margin-top:8px;line-height:1.6">กำไรที่ได้ จะ<strong>จ่ายปันผล</strong>หรือเก็บไว้ขยายกิจการ?</div>
+          </div>
+        </div>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ จุดสอบออก</div>
+          ต้องแยกให้ออกว่า ROCE วัดผลตอบแทนจากการลงทุน ส่วน WACC คือต้นทุนของเงินทุน — เปรียบทั้งสองเสมอ!
+        </div>
+      ` },
+      { id: 'securities', label: 'ประเภทหลักทรัพย์และตลาด', content: `
+        <div class="concept-block">
+          <div class="concept-header">🏦 บริษัทหาเงินจากตลาดการเงิน — มี 3 ประเภทหลัก</div>
+        </div>
+        <table class="ratio-table">
+          <tr><th>ประเภท</th><th>ลักษณะ</th><th>ผู้ถือ</th><th>ตัวอย่าง</th></tr>
+          <tr>
+            <td><strong class="star">Debt (หนี้)</strong></td>
+            <td>ผู้ให้กู้ได้รับ: ดอกเบี้ยคงที่ + คืนต้น<br>ไม่ขึ้นกับผลการดำเนินงาน</td>
+            <td>เจ้าหนี้ (มีสิทธิ์ก่อนผู้ถือหุ้น)</td>
+            <td class="mono">Bonds, Syndicated Loans, Bank Loans</td>
+          </tr>
+          <tr>
+            <td><strong class="star">Equity (ทุน)</strong></td>
+            <td>รับส่วนแบ่งกำไร + capital gain<br>รับความเสี่ยงเต็ม — ไม่มีการรับประกัน</td>
+            <td>ผู้ถือหุ้น (สิทธิ์หลังสุด แต่ upside ไม่จำกัด)</td>
+            <td class="mono">Ordinary Shares, Preference Shares</td>
+          </tr>
+          <tr>
+            <td><strong>Hybrid</strong></td>
+            <td>ผสมระหว่าง Debt และ Equity</td>
+            <td>—</td>
+            <td class="mono">Convertible Bonds, Warrants, Mezzanine</td>
+          </tr>
+        </table>
+        <div class="callout example">
+          <div class="callout-head">💡 CFO มองตลาดการเงินจาก 2 มุม</div>
+          <strong>มุมที่ 1 — ผู้ซื้อ (แบบดั้งเดิม):</strong> CFO ซื้อเงิน ต้องลด Cost of Capital ให้ต่ำที่สุด<br>
+          เช่น ต่อรองดอกเบี้ยกับธนาคาร หรือต่อรอง commission กับ underwriter<br><br>
+          <strong>มุม 2 — ผู้ขาย (มุมสมัยใหม่):</strong> CFO ขายหลักทรัพย์ ต้องทำให้ราคาขายสูงที่สุด<br>
+          → ต้องสื่อสาร Value สร้าง Trust กับนักลงทุน
+        </div>
+        <div class="callout tip">
+          <div class="callout-head">🏛️ ประเภทของตลาดการเงิน</div>
+          <strong>Money Market:</strong> หลักทรัพย์ระยะสั้น &lt; 1 ปี — T-bills, Commercial Paper<br>
+          <strong>Capital Market:</strong> หลักทรัพย์ระยะยาว — Bonds, Equities<br>
+          <strong>Derivatives Market:</strong> Options, Futures — ใช้บริหารความเสี่ยง<br>
+          <strong>Primary Market:</strong> ออกหลักทรัพย์ใหม่ (IPO, Bond issuance)<br>
+          <strong>Secondary Market:</strong> ซื้อขายหลักทรัพย์เดิมระหว่างนักลงทุน
+        </div>
+      ` }
+    ]
+  },
+  ch2: {
+    title: 'Cash Flow — กระแสเงินสด',
+    subtitle: 'บทที่ 2 — Cash is King',
+    sections: [
+      { id: 'why', label: 'ทำไม Cash Flow สำคัญกว่ากำไร', content: `
+        <div class="callout example">
+          <div class="callout-head">💡 ตัวอย่าง: พ่อค้าผลไม้</div>
+          เช้า: ซื้อผลไม้ 1,000 บาท → ขายได้ 1,500 บาท → <strong>กำไร 500 บาท</strong><br>
+          แต่ลูกค้าขอจ่ายอาทิตย์หน้า → <em>มีกำไรในบัญชี แต่ไม่มีเงินในกระเป๋า</em><br>
+          พรุ่งนี้ต้องซื้อผลไม้อีก 1,000 บาท แต่ไม่มีเงิน<br><br>
+          → <strong>ธุรกิจหยุดได้แม้มีกำไร</strong> — นี่คือเหตุผลว่าทำไม Cash Flow จึงสำคัญกว่า Profit
+        </div>
+      ` },
+      { id: 'cycles', label: '4 วงจรเงินสด', content: `
+        <div class="concept-block">
+          <div class="concept-header">🔄 4 วงจรเงินสดของบริษัท (ต้องจำ!)</div>
+        </div>
+        <div class="grid2">
+          <div class="stat-box"><div class="label">Operating Cycle</div><div style="font-size:13px;margin-top:8px;line-height:1.7">ซื้อวัตถุดิบ → ผลิต → ขาย → เก็บเงิน → วนซ้ำ<br><span style="color:var(--muted)">ยิ่ง Cycle สั้น = ใช้ WC น้อย = ดีกว่า</span></div></div>
+          <div class="stat-box"><div class="label">Investment Cycle</div><div style="font-size:13px;margin-top:8px;line-height:1.7">ซื้อเครื่องจักร/อาคาร ใช้งานหลายปี → ก่อให้เกิด operating CF ที่ดีขึ้น<br><span style="color:var(--muted)">กินเวลานานกว่า operating cycle มาก</span></div></div>
+          <div class="stat-box"><div class="label">Debt Cycle</div><div style="font-size:13px;margin-top:8px;line-height:1.7">กู้เงิน → จ่ายดอกเบี้ย → คืนต้น</div></div>
+          <div class="stat-box"><div class="label">Equity Cycle</div><div style="font-size:13px;margin-top:8px;line-height:1.7">ออกหุ้น → ได้ทุน → จ่ายปันผล</div></div>
+        </div>
+        <div class="callout example">
+          <div class="callout-head">⏱️ ความยาว Operating Cycle แตกต่างตาม Industry</div>
+          <table class="ratio-table">
+            <tr><th>อุตสาหกรรม</th><th>ความยาว Cycle</th><th>เหตุผล</th></tr>
+            <tr><td>หนังสือพิมพ์</td><td class="good">~1 วัน</td><td>ขายสด รับเงินทันที</td></tr>
+            <tr><td>Supermarket</td><td class="good">~7–14 วัน</td><td>สินค้าหมุนเร็ว, รับ cash</td></tr>
+            <tr><td>ผู้ผลิตรถยนต์</td><td>~60–90 วัน</td><td>ผลิตนาน + ให้ credit dealer</td></tr>
+            <tr><td>โรงงานเหล้าคอนยัค</td><td class="bad">~7 ปี</td><td>ต้องบ่มนานก่อนขาย</td></tr>
+          </table>
+        </div>
+        <div class="callout formula">
+          <div class="callout-head">📐 กฎสำคัญ</div>
+          Operating CF + Investing CF = FCF<br>
+          ถ้า FCF &lt; 0 → ต้องเติมจาก Debt หรือ Equity
+        </div>
+      ` },
+      { id: 'fcf', label: 'Free Cash Flow', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 Free Cash Flow (Before Tax)</div>
+          FCF = EBITDA − Δ Working Capital − Capital Expenditure<br><br>
+          หมายเหตุ: คำนวณก่อนดอกเบี้ยและภาษี เพื่อดู cash ที่มาจากธุรกิจล้วนๆ
+        </div>
+        <table class="ratio-table">
+          <tr><th>รายการ</th><th>ความหมาย</th><th>สัญญาณอันตราย</th></tr>
+          <tr><td><strong>Operating CF (A)</strong></td><td>รายรับ − รายจ่ายจากธุรกิจปกติ</td><td class="bad">ติดลบหลายปีติด</td></tr>
+          <tr><td><strong>− Capex (B)</strong></td><td>เงินซื้อสินทรัพย์ถาวร</td><td class="bad">Capex พุ่ง แต่ Revenue ไม่ตาม</td></tr>
+          <tr><td><strong>= FCF (A−B) ⭐</strong></td><td>Cash จริงที่เหลือหลังลงทุน</td><td class="bad">ติดลบเรื้อรัง</td></tr>
+          <tr><td><strong>Financing CF (C)</strong></td><td>รับกู้/ออกหุ้น − ชำระหนี้ − ปันผล</td><td class="bad">พึ่งส่วนนี้มากในระยะยาว</td></tr>
+        </table>
+      ` }
+    ]
+  },
+  ch3: {
+    title: 'Earnings — Income Statement',
+    subtitle: 'บทที่ 3 — กำไรวัด "ความมั่งคั่ง" ไม่ใช่ "เงินสด"',
+    sections: [
+      { id: 'vs', label: 'Income Statement vs Cash Flow', content: `
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent)">Income Statement วัด...</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.8">
+              ✦ การเพิ่ม/ลดของความมั่งคั่ง<br>
+              ✦ รวมรายการที่ไม่ใช่ cash (ค่าเสื่อม)<br>
+              ✦ รับรู้ Revenue เมื่อส่งมอบ<br>
+              ✦ กำไร = Revenue − Costs
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent2)">Cash Flow Statement วัด...</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.8">
+              ✦ การเคลื่อนไหวของเงินสดจริง<br>
+              ✦ ไม่รวมค่าเสื่อม (ไม่ใช่ cash)<br>
+              ✦ รับรู้เมื่อรับหรือจ่ายเงินจริง<br>
+              ✦ ข้อเท็จจริง ไม่มีการประมาณ
+            </div>
+          </div>
+        </div>
+      ` },
+      { id: 'structure', label: 'โครงสร้าง Income Statement', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 ลำดับการคำนวณ — จำทิศทางนี้ให้ได้</div>
+          Net Sales (ยอดขายสุทธิ)<br>
+          +/− Change in Finished Goods Inventory<br>
+          + Production for Own Use<br>
+          = <span style="color:var(--accent)">PRODUCTION</span><br>
+          − Raw Materials Used<br>
+          = <span style="color:var(--accent2)">GROSS MARGIN</span><br>
+          − External Costs<br>
+          = <span style="color:var(--accent4)">VALUE ADDED</span><br>
+          − Personnel Costs − Other Taxes<br>
+          = <span style="color:var(--yellow)">EBITDA ⭐</span><br>
+          − Depreciation & Amortisation<br>
+          = <span style="color:var(--accent5)">EBIT ⭐⭐</span><br>
+          − Net Financial Expense<br>
+          = Profit Before Tax (PBT)<br>
+          +/− Non-recurring Items − Corporate Tax<br>
+          = <span style="color:var(--accent3)">NET INCOME</span>
+        </div>
+        <div class="callout tip">
+          <div class="callout-head">💡 ทำไม EBITDA ถึงเป็น Metric ยอดนิยม</div>
+          <strong>ข้อดี 1:</strong> ไม่ถูกกระทบโดยนโยบายบัญชี (ค่าเสื่อมแต่ละบริษัทคำนวณต่างกัน)<br>
+          <strong>ข้อดี 2:</strong> ไม่ถูกกระทบโดยโครงสร้างเงินทุน<br>
+          <strong>ข้อดี 3:</strong> เปรียบเทียบข้ามประเทศได้<br>
+          <strong>ข้อเสีย:</strong> ไม่รวม Capex — บริษัทที่ต้องลงทุน infra สูง EBITDA สูงก็อาจไม่พอ<br><br>
+          Benchmark: Telecom ~33% | Food Retail ~6% | Pharma ~32%
+        </div>
+      ` },
+      { id: 'recurring', label: 'Recurring vs Non-recurring', content: `
+        <div class="concept-block">
+          <div class="concept-header">⚠️ แยกให้ออกก่อนวิเคราะห์</div>
+        </div>
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label good">Recurring — เกิดซ้ำ</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.8">
+              ✦ ค่าเสื่อมราคา<br>✦ ค่าแรงพนักงาน<br>✦ ต้นทุนวัตถุดิบ<br>✦ ดอกเบี้ยจ่าย<br>
+              <em style="color:var(--muted)">→ ใช้สร้าง Forecasts ได้</em>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label bad">Non-recurring — ครั้งเดียว</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.8">
+              ✦ กำไร/ขาดทุนจากขายสินทรัพย์<br>✦ ค่าปรับทางกฎหมาย<br>✦ ค่าใช้จ่ายปิดโรงงาน<br>✦ Goodwill Impairment<br>
+              <em style="color:var(--muted)">→ ตัดออกก่อนหา Normalized Earnings</em>
+            </div>
+          </div>
+        </div>
+      ` },
+      { id: 'formats', label: 'By-Nature vs By-Function', content: `
+        <div class="callout tip">
+          <div class="callout-head">💡 Income Statement มี 2 รูปแบบหลัก</div>
+          บริษัทเลือกรูปแบบได้ แต่ต้องใช้แบบเดิมสม่ำเสมอ — ผลลัพธ์ NET INCOME เท่ากัน แต่ breakdown ต่างกัน
+        </div>
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent)">By Nature (ตามประเภทต้นทุน)</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.8">
+              Revenue<br>
+              − Raw Materials<br>
+              − Personnel Costs<br>
+              − Depreciation<br>
+              − Other Costs<br>
+              = <strong>EBIT</strong><br><br>
+              <em style="color:var(--muted)">ใช้มากในยุโรป (IFRS default)<br>เห็น Value Added ชัด</em>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent2)">By Function (ตาม Function)</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.8">
+              Revenue<br>
+              − Cost of Goods Sold (COGS)<br>
+              = Gross Profit<br>
+              − Selling & Distribution<br>
+              − G&A Expenses<br>
+              = <strong>EBIT</strong><br><br>
+              <em style="color:var(--muted)">ใช้มากในสหรัฐ (US GAAP)<br>เห็น Gross Margin ชัด</em>
+            </div>
+          </div>
+        </div>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ จุดสำคัญ: Value Added</div>
+          Value Added = EBITDA + Personnel Costs = มูลค่าที่บริษัทสร้างเพิ่มให้สังคม<br>
+          แบ่งระหว่าง: พนักงาน (Personnel) + รัฐ (Taxes) + เจ้าหนี้ (Interest) + ผู้ถือหุ้น (Dividend + Retained Earnings)<br>
+          <em>ยิ่ง Value Added / Production สูง = บริษัท add value ได้มาก ไม่ได้แค่ "assemble" ชิ้นส่วน</em>
+        </div>
+      ` }
+    ]
+  },
+  ch4: {
+    title: 'Balance Sheet — งบดุล',
+    subtitle: 'บทที่ 4 — Capital Employed & Invested Capital',
+    sections: [
+      { id: 'view', label: '2 วิธีมองงบดุล', content: `
+        <div class="concept-body" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px">
+          งบดุล = ภาพถ่าย ณ วันที่หนึ่ง ว่าบริษัทมีอะไรอยู่ (Assets) และเงินมาจากไหน (Liabilities + Equity)<br><br>
+          <strong>กฎเหล็ก:</strong> Assets = Liabilities + Shareholders' Equity
+        </div>
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent)">Capital Employed Analysis</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ตอบ: <em>"บริษัทลงทุนอะไร เงินมาจากไหน?"</em><br>
+              Fixed Assets + Working Capital = CE<br>
+              Equity + Net Debt = Invested Capital<br>
+              <strong>CE = Invested Capital เสมอ</strong><br>
+              ใช้คำนวณ ROCE, ROE, Leverage Effect
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent2)">Solvency & Liquidity Analysis</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ตอบ: <em>"ถ้าบริษัทล้มจะได้เงินคืนไหม?"</em><br>
+              แบ่ง Assets ตามสภาพคล่อง Current/Non-current<br>
+              แบ่ง Liabilities ตามกำหนดชำระ<br>
+              ใช้คำนวณ Current Ratio, Quick Ratio
+            </div>
+          </div>
+        </div>
+      ` },
+      { id: 'formulas', label: 'สมการงบดุลที่ต้องจำ', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 สมการงบดุลที่ต้องจำ (ทั้งหมด)</div>
+          Capital Employed (CE) = Fixed Assets + Working Capital<br>
+          Invested Capital     = Shareholders' Equity (E) + Net Debt (D)<br>
+          <span style="color:var(--yellow)">CE = Invested Capital (เสมอ!)</span><br><br>
+          Working Capital = Trade Receivables + Inventories − Trade Payables<br>
+          Net Debt = Borrowings − Cash − Marketable Securities<br><br>
+          <em>Net Debt ติดลบ = บริษัทมี Net Cash (ดีมาก!)</em>
+        </div>
+        <div class="callout example">
+          <div class="callout-head">💡 ตัวอย่าง: WC บริษัทผลิตรองเท้า</div>
+          ซื้อหนัง 100k จากซัพพลายเออร์ (30 วัน) → Payable: 100k<br>
+          ผลิต 45 วัน → Inventory: ~100k<br>
+          ขายได้ 150k ให้ credit 60 วัน → Receivable: 150k<br><br>
+          <strong>WC = 150k + 100k − 100k = 150k บาท</strong><br>
+          บริษัทต้องหาเงิน 150k เพื่อหล่อเลี้ยงวงจรนี้!
+        </div>
+      ` },
+      { id: 'solvency', label: 'Liquidity & Solvency', content: `
+        <div class="callout tip">
+          <div class="callout-head">💡 Liquidity vs Solvency — ต่างกันอย่างไร?</div>
+          <strong>Liquidity (สภาพคล่อง):</strong> จ่ายหนี้<em>ระยะสั้น</em>ได้ไหม? — มองทรัพย์สินหมุนเวียน<br>
+          <strong>Solvency (ความสามารถชำระหนี้):</strong> ถ้าขายสินทรัพย์<em>ทั้งหมด</em> คืนหนี้ได้ไหม? — มองทั้งงบดุล
+        </div>
+        <table class="ratio-table">
+          <tr><th>Concept</th><th>นิยาม</th><th>ค่าที่ดี</th><th>ข้อจำกัด</th></tr>
+          <tr>
+            <td><strong>Current Ratio</strong></td>
+            <td class="mono">Current Assets / Current Liabilities</td>
+            <td><span class="good">&gt; 1.5x</span> ปลอดภัย</td>
+            <td>Inventory อาจขายยาก</td>
+          </tr>
+          <tr>
+            <td><strong>Quick Ratio</strong></td>
+            <td class="mono">(CA − Inventory) / CL</td>
+            <td><span class="good">&gt; 1x</span></td>
+            <td>ยังไม่รวม Cash timing</td>
+          </tr>
+          <tr>
+            <td><strong>Net Asset Value (NAV)</strong></td>
+            <td class="mono">Total Assets − Total Liabilities = Book Value of Equity</td>
+            <td><span class="good">Positive</span></td>
+            <td>Book value ≠ market value</td>
+          </tr>
+        </table>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ Insolvent ≠ Illiquid</div>
+          บริษัทที่จ่ายหนี้ไม่ได้ชั่วคราว <em>ไม่จำเป็นต้องล้มละลาย</em> — อาจแค่ขาด liquidity ชั่วคราว<br>
+          แต่บริษัทที่ Insolvent (สินทรัพย์น้อยกว่าหนี้สิน) มักจบด้วยการล้มละลายในระยะยาว
+        </div>
+      ` }
+    ]
+  },
+  ch5: {
+    title: 'Earnings → Cash Flow',
+    subtitle: 'บทที่ 5 — เชื่อมสามงบให้เป็นภาพเดียว',
+    sections: [
+      { id: 'diff', label: 'สาเหตุที่กำไร ≠ Cash', content: `
+        <table class="ratio-table">
+          <tr><th>สาเหตุ</th><th>ผลต่างระหว่างกำไรและ Cash</th><th>ตัวอย่าง</th></tr>
+          <tr>
+            <td><strong>D&A</strong></td>
+            <td>ลดกำไร แต่ไม่ลด Cash → <span class="good">ต้องบวกกลับ</span></td>
+            <td class="mono">ซื้อเครื่องจักร 1M, D&A 200k/ปี: กำไรลด 200k แต่ cash ไม่ออก</td>
+          </tr>
+          <tr>
+            <td><strong>Δ Working Capital</strong></td>
+            <td>WC เพิ่ม → ใช้ Cash เพิ่ม แต่กำไรไม่เปลี่ยน</td>
+            <td class="mono">ให้ credit ลูกค้านาน = Receivable เพิ่ม = cash ออกก่อน</td>
+          </tr>
+          <tr>
+            <td><strong>Capital Expenditure</strong></td>
+            <td>ไม่อยู่ใน P&L โดยตรง แต่ cash ออกทันที</td>
+            <td class="mono">ซื้อโรงงาน 50M: cash ออกเต็ม แต่ P&L รับรู้แค่ D&A รายปี</td>
+          </tr>
+          <tr>
+            <td><strong>Revenue Recognition</strong></td>
+            <td>ขายเชื่อ = กำไรทันที แต่ cash ยังไม่ได้</td>
+            <td class="mono">ส่งสินค้าแล้ว รับรู้ Revenue แต่ยังไม่ได้เงินจากลูกค้า</td>
+          </tr>
+        </table>
+      ` },
+      { id: 'reconcile', label: 'Reconciliation — P&L สู่ Cash', content: `
+        <div class="callout tip">
+          <div class="callout-head">🔗 วิธีเชื่อม Revenue → Operating Receipts</div>
+          <strong>Sales (P&L)</strong><br>
+          − เพิ่มขึ้นของ Trade Receivables (ยังไม่ได้รับเงิน)<br>
+          + ลดลงของ Trade Receivables (เก็บเงินจากปีก่อน)<br>
+          = <strong>Operating Receipts (Cash จริง)</strong><br><br>
+          <em>ถ้า DSO เพิ่ม → Receivables เพิ่ม → Cash receipts &lt; Sales</em>
+        </div>
+        <table class="ratio-table">
+          <tr><th>รายการ P&L</th><th>ปรับเพื่อหา Cash</th><th>ผล</th></tr>
+          <tr><td><strong>Sales</strong></td><td>− Δ Receivables</td><td>Operating Receipts</td></tr>
+          <tr><td><strong>Raw Material Cost</strong></td><td>+ Δ Inventory − Δ Payables</td><td>Cash paid to suppliers</td></tr>
+          <tr><td><strong>Personnel / Other Costs</strong></td><td>+ Δ Accrued Liabilities</td><td>Cash operating costs</td></tr>
+          <tr><td><strong>D&A</strong></td><td>+ บวกกลับ (non-cash)</td><td>ไม่ใช่ cash outflow</td></tr>
+          <tr><td><strong>Capex</strong></td><td>ไม่อยู่ใน P&L แต่รวมใน CF</td><td>Cash ออกทันที</td></tr>
+        </table>
+      ` },
+      { id: 'map', label: 'EBITDA → Net Debt Change', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 เส้นทางจาก EBITDA สู่ Net Debt Change</div>
+          EBITDA<br>
+          − Δ Operating Working Capital  ← WC เพิ่ม = ใช้ cash<br>
+          = <span style="color:var(--accent)">Operating Cash Flow</span><br>
+          − Capital Expenditure (Capex)<br>
+          + Asset Disposals<br>
+          = <span style="color:var(--accent2)">Free Cash Flow (Before Tax)</span><br>
+          − Net Financial Expense<br>
+          − Corporate Income Tax<br>
+          + Share Issues − Share Buybacks − Dividends<br>
+          = <span style="color:var(--yellow)">Net Decrease in Debt</span>
+        </div>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ จุดสอบออก — ความสัมพันธ์ EBITDA กับ Operating CF</div>
+          EBITDA − Δ Working Capital = <strong>Operating Cash Flow</strong> (ไม่ใช่ FCF!)<br>
+          FCF = Operating Cash Flow − Capex<br><br>
+          ถ้า WC เพิ่มขึ้น → Operating CF <strong>ต่ำกว่า</strong> EBITDA (cash ถูกดักไว้ใน WC)<br>
+          ถ้า WC ลดลง → Operating CF <strong>สูงกว่า</strong> EBITDA (ปล่อย cash จาก WC)
+        </div>
+      ` }
+    ]
+  },
+  ch6: {
+    title: 'Consolidated Accounts & Complex Points',
+    subtitle: 'บทที่ 6–7 — งบการเงินรวมและประเด็นซับซ้อน',
+    sections: [
+      { id: 'methods', label: 'วิธีรวมบัญชี 3 วิธี', content: `
+        <table class="ratio-table">
+          <tr><th>วิธี</th><th>เงื่อนไข</th><th>วิธีบันทึก</th><th>ผลกระทบ</th></tr>
+          <tr>
+            <td><strong>Full Consolidation</strong></td>
+            <td>&gt; 50% (Exclusive Control)</td>
+            <td>รวม 100% ของ Assets/Liabilities/Revenue แล้วหัก Minority Interest</td>
+            <td>Sales/Assets เพิ่มมาก</td>
+          </tr>
+          <tr>
+            <td><strong>Equity Method</strong></td>
+            <td>20–50% (Significant Influence)</td>
+            <td>บันทึกแค่สัดส่วน Equity และกำไร/ขาดทุน</td>
+            <td>Assets เพิ่มแค่มูลค่าหุ้น</td>
+          </tr>
+          <tr>
+            <td><strong>No Consolidation</strong></td>
+            <td>&lt; 20%</td>
+            <td>บันทึกเป็น Financial Investment รับรู้แค่เงินปันผล</td>
+            <td>ไม่กระทบ Sales/Operating Profit</td>
+          </tr>
+        </table>
+        <div class="callout example">
+          <div class="callout-head">💡 ตัวอย่าง Full Consolidation: บริษัทแม่ถือ 70%</div>
+          บริษัทลูกมี Revenue = 100M, Net Assets = 80M<br><br>
+          <strong>งบรวม:</strong> รวม Revenue 100% = 100M เข้างบแม่<br>
+          <strong>Minority Interest (30%):</strong> หัก 30% × Net Income และ 30% × Net Assets ออก<br><br>
+          <em>→ ผู้ถือหุ้นแม่ได้รับ Net Income เฉพาะ 70% ของลูก แต่ Sales แสดง 100%</em>
+        </div>
+        <div class="callout formula">
+          <div class="callout-head">📐 Goodwill</div>
+          Goodwill = Purchase Price − Fair Value of Net Assets Acquired<br><br>
+          ตัวอย่าง: ซื้อบริษัทราคา 100M แต่ Net Assets = 60M → Goodwill = 40M<br>
+          <em>= เบี้ยส่วนเกินที่จ่ายเพราะ Brand, ลูกค้า, เทคโนโลยี</em><br><br>
+          ภายใต้ IFRS: <strong>ไม่ amortise Goodwill</strong> แต่ทดสอบ Impairment ทุกปี
+        </div>
+      ` },
+      { id: 'complex', label: 'ประเด็นซับซ้อน (บทที่ 7)', content: `
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label">Deferred Tax</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">ภาษีรอตัดบัญชี เกิดจาก timing difference<br>อาจเป็น Asset (จ่ายไปแล้วใช้คืนได้) หรือ Liability (ต้องจ่ายทีหลัง)<br><em style="color:var(--muted)">Analyst: ดูว่า DTA realisable จริงไหม?</em></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Provisions</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">ประมาณการหนี้สิน Recognize เมื่อมีภาระผูกพันและประมาณได้<br>→ ต้องดูว่า recurring หรือ one-off<br><em style="color:var(--muted)">Analyst: แยก provision ก่อนหา normalized EBIT</em></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Finance Leases (IFRS 16)</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">สินทรัพย์และหนี้สินบันทึกใน Balance Sheet ทั้งคู่<br>IFRS 16 บังคับรวม Operating Lease เข้า BS ด้วย<br><em style="color:var(--muted)">→ ทำให้ Net Debt เพิ่มขึ้น, EBITDA เพิ่มขึ้น</em></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Goodwill Impairment</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">ทดสอบ impairment ทุกปี (ไม่ amortise ตาม IFRS)<br>ถ้า DCF ของ cash-generating unit &lt; carrying value → Impairment loss<br><em style="color:var(--muted)">→ Non-recurring, ต้ดออกก่อนวิเคราะห์</em></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Off-balance Sheet</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">รายการที่ไม่แสดงใน Balance Sheet แต่มีความเสี่ยง<br>→ ต้องอ่าน Notes to Financial Statements<br><em style="color:var(--muted)">เช่น Operating commitments, Guarantees, Pensions</em></div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Minority Interest</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">สัดส่วนที่บริษัทแม่ไม่ได้ถือ ใน Full Consolidation<br>Full Consol รวม 100% แล้วหัก Minority Interest<br><em style="color:var(--muted)">Net Income ที่แบ่งผู้ถือหุ้นแม่ = หลัง Minority</em></div>
+          </div>
+        </div>
+      ` }
+    ]
+  },
+  ch8: {
+    title: 'How to Perform Financial Analysis',
+    subtitle: 'บทที่ 8 — กระบวนการวิเคราะห์ที่ถูกต้อง',
+    sections: [
+      { id: 'steps', label: '7 ขั้นตอนการวิเคราะห์', content: `
+        <table class="ratio-table">
+          <tr><th>#</th><th>ขั้นตอน</th><th>ทำอะไร</th><th>ถามตัวเองว่า</th></tr>
+          <tr><td class="star">1</td><td><strong>Strategic Assessment</strong></td><td>ศึกษาอุตสาหกรรม ตำแหน่งการแข่งขัน Business Model</td><td class="mono" style="font-size:11px">ธุรกิจสร้างเงินจากอะไร?</td></tr>
+          <tr><td class="star">2</td><td><strong>Audit & Accounting</strong></td><td>อ่าน Auditor's Report ตรวจนโยบายบัญชีที่ผิดปกติ</td><td class="mono" style="font-size:11px">ตัวเลขเชื่อถือได้ไหม?</td></tr>
+          <tr><td class="star">3</td><td><strong>Margin Analysis</strong></td><td>EBITDA/EBIT margin trend, Scissors Effect</td><td class="mono" style="font-size:11px">กำไรดีขึ้นหรือแย่ลง? ทำไม?</td></tr>
+          <tr><td class="star">4</td><td><strong>WC & Capex</strong></td><td>DSO, DIO, DPO, WC/Sales, Capex/Sales</td><td class="mono" style="font-size:11px">บริหาร WC ดีไหม?</td></tr>
+          <tr><td class="star">5</td><td><strong>Financing</strong></td><td>Net Debt/EBITDA, ICR, Cash Flow trends</td><td class="mono" style="font-size:11px">มีหนี้เกินไปไหม?</td></tr>
+          <tr><td class="star">6</td><td><strong>Profitability</strong></td><td>ROCE, ROE, Leverage Effect breakdown</td><td class="mono" style="font-size:11px">ผลตอบแทน > WACC ไหม?</td></tr>
+          <tr><td class="star">7</td><td><strong>Conclusion</strong></td><td>สรุปภาพรวม โอกาส ความเสี่ยง คาดการณ์</td><td class="mono" style="font-size:11px">น่าลงทุน/น่าปล่อยกู้ไหม?</td></tr>
+        </table>
+      ` },
+      { id: 'roadmap', label: '4-Stage Analysis Roadmap', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 หลักคิดหลักของการวิเคราะห์ทางการเงิน</div>
+          <strong style="color:var(--yellow)">"Wealth creation requires investment that must be financed and provide sufficient return"</strong><br><br>
+          = การสร้างมูลค่าต้องมีการลงทุน ซึ่งต้องหาแหล่งเงิน และต้องให้ผลตอบแทนที่เพียงพอ
+        </div>
+        <table class="ratio-table">
+          <tr><th>Stage</th><th>คำถาม</th><th>ดูจากอะไร</th></tr>
+          <tr>
+            <td><strong class="star">1. Wealth Creation</strong></td>
+            <td>บริษัทสร้างมูลค่าได้ไหม?</td>
+            <td>Sales growth (Volume/Price/FX/Scope), EBITDA/EBIT margin trend, Scissors Effect, Operating Leverage</td>
+          </tr>
+          <tr>
+            <td><strong class="star">2. Investment</strong></td>
+            <td>ลงทุนอะไร เท่าไร?</td>
+            <td>Working Capital trend, Capital Expenditure (Maint. vs Growth), Asset Turnover</td>
+          </tr>
+          <tr>
+            <td><strong class="star">3. Financing</strong></td>
+            <td>เงินมาจากไหน?</td>
+            <td>Cash flow statement (dynamic), Balance sheet (static), Net Debt/EBITDA, ICR, Debt maturity</td>
+          </tr>
+          <tr>
+            <td><strong class="star">4. Profitability</strong></td>
+            <td>ผลตอบแทนพอไหม?</td>
+            <td>ROCE vs WACC (Value creation?), ROE, Leverage Effect, Solvency risk</td>
+          </tr>
+        </table>
+        <div class="callout tip">
+          <div class="callout-head">🔍 งานเบื้องต้นก่อนเริ่มวิเคราะห์ — 2 ด้าน</div>
+          <strong>1. รู้จักธุรกิจให้ดีก่อน:</strong> ตลาด (ขนาด, การแข่งขัน), สินค้า, กระบวนการผลิต, ช่องทางจำหน่าย, บุคลากร<br><br>
+          <strong>2. เข้าใจนโยบายบัญชี:</strong> Auditor's report, วิธี consolidation, การคิด Goodwill/Brands, Provisions, Inventory valuation, Off-BS items
+        </div>
+      ` },
+      { id: 'techniques', label: 'Techniques of Financial Analysis', content: `
+        <div class="concept-body" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px">
+          Financial analysis ต้องดู <strong>หลายปี</strong> (อย่างน้อย 3 ปี) — ปีเดียวบอกอะไรไม่ได้มาก
+        </div>
+        <table class="ratio-table">
+          <tr><th>Technique</th><th>วิธี</th><th>ข้อดี</th><th>ข้อจำกัด</th></tr>
+          <tr>
+            <td><strong>Trend Analysis</strong></td>
+            <td>ดูแนวโน้มหลายปีของ Ratio เดิม</td>
+            <td>เห็น deterioration ก่อนเกิดวิกฤต</td>
+            <td>ต้องแน่ใจว่าข้อมูล comparable (ไม่มี M&A, scope change)</td>
+          </tr>
+          <tr>
+            <td><strong>Cross-sectional</strong></td>
+            <td>เปรียบเทียบกับ Peer ในอุตสาหกรรมเดียวกัน</td>
+            <td>เห็นว่าดีหรือแย่ relative to peers</td>
+            <td>ต้องหา comparable companies จริงๆ</td>
+          </tr>
+          <tr>
+            <td><strong>Scoring / Rating</strong></td>
+            <td>รวม Ratio หลายตัวเป็น Score เดียว</td>
+            <td>Predictive — ใช้ทำนายล้มละลาย</td>
+            <td>อาจ oversimplify</td>
+          </tr>
+        </table>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ Red Flags ที่ต้องสังเกต</div>
+          Margin ลดต่อเนื่องขณะที่ Revenue โต (Scissors Effect เริ่มทำงาน)<br>
+          Receivables โตเร็วกว่า Revenue (DSO ยืด — อาจมีปัญหาเก็บเงิน)<br>
+          FCF ติดลบทั้งที่ EBITDA บวก (WC หรือ Capex ดูด cash หมด)<br>
+          Net Debt/EBITDA สูงขึ้นทุกปี (leverage เพิ่มโดยไม่มี FCF support)
+        </div>
+      ` }
+    ]
+  },
+  ch9: {
+    title: 'Margin Analysis: Structure & Risks',
+    subtitle: 'บทที่ 9–10 — วิเคราะห์โครงสร้างกำไรและความเสี่ยง',
+    sections: [
+      { id: 'sales', label: 'แยก Sales Growth', content: `
+        <div class="callout tip">
+          <div class="callout-head">🔍 แยก Sales Growth ออกเป็นส่วนประกอบ</div>
+          <strong>Sales Growth = Volume + Price + FX + Scope (M&A)</strong><br><br>
+          Volume Growth: ขายได้มากขึ้นจริงไหม? — วัดความต้องการตลาดแท้จริง<br>
+          Price Growth: ขึ้นราคาได้ไหม? — วัด Pricing Power<br>
+          FX Effect: ผลจากค่าเงิน — ดูบน Constant Currency Basis<br>
+          Scope (M&A): จากการซื้อกิจการ — ดู Like-for-like / Organic growth<br><br>
+          <em>ตัวอย่าง: Sales โต 20% แต่มาจาก M&A 15% + Organic 5% = น่าห่วง!</em>
+        </div>
+      ` },
+      { id: 'scissors', label: 'Scissors Effect', content: `
+        <div class="callout warning">
+          <div class="callout-head">✂️ Scissors Effect — ผลกรรไกร</div>
+          เกิดเมื่อ: รายได้โตช้า แต่ Fixed Costs โตเร็ว → margin บีบลงเร็วมาก<br><br>
+          ตัวอย่าง: Sales โต 5% แต่ Fixed Personnel Cost โต 10% → EBITDA Margin ลด<br><br>
+          บริษัทเสี่ยงสูง: High Fixed Cost businesses เช่น Airlines, Car manufacturers<br>
+          วิธีป้องกัน: Outsourcing, Variable compensation, Flexible contracts<br><br>
+          ในทางกลับกัน: ถ้า Sales โตเร็วกว่า Fixed Costs → Operating Leverage ทำงานในทิศบวก
+        </div>
+      ` },
+      { id: 'leverage', label: 'Operating Leverage & Breakeven', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 Operating Leverage & Breakeven</div>
+          Contribution Margin (CM) = Sales − Variable Costs<br>
+          CM Ratio (m) = CM / Sales<br>
+          Breakeven Sales = Fixed Costs / m<br>
+          DOL = CM / EBIT = (Sales − VC) / EBIT<br><br>
+          ตัวอย่าง: FC=90, VC=50, Sales=150<br>
+          m = 66.7%, Breakeven = 90/0.667 = 135<br>
+          DOL = 100/10 = <span style="color:var(--accent3)">10x</span>
+        </div>
+        <table class="ratio-table">
+          <tr><th>ระดับ Breakeven</th><th>สูตร</th><th>ความหมาย</th></tr>
+          <tr><td>Operating Breakeven</td><td class="mono">FC / m</td><td>EBIT = 0</td></tr>
+          <tr><td>Financial Breakeven</td><td class="mono">(FC + Interest) / m</td><td>PBT = 0</td></tr>
+          <tr><td class="good"><strong>Total Breakeven ✅</strong></td><td class="mono">(FC + Interest + Required Return on E) / m</td><td>สร้างผลตอบแทนพอสำหรับผู้ถือหุ้น</td></tr>
+        </table>
+        <div class="callout example">
+          <div class="callout-head">💡 Rule of Thumb</div>
+          &lt; 10% เหนือ financial breakeven = อันตราย<br>
+          10–20% เหนือ = พอรับได้<br>
+          &gt; 20% เหนือ = ปลอดภัย<br><br>
+          Margin of Safety = (Sales − Breakeven) / Sales
+        </div>
+      ` }
+    ]
+  },
+  ch11: {
+    title: 'Working Capital & Capital Expenditures',
+    subtitle: 'บทที่ 11 — บริหารเงินทุนหมุนเวียนและการลงทุน',
+    sections: [
+      { id: 'wc', label: 'WC Turnover Ratios', content: `
+        <div class="callout tip">
+          <div class="callout-head">💡 WC มีลักษณะสองด้านที่ขัดแย้งกัน</div>
+          <strong>มีสภาพคล่อง:</strong> แต่ละรายการ turnover สั้น ลูกหนี้จะได้รับชำระ สต็อกจะถูกขาย<br>
+          <strong>แต่ก็ถาวร:</strong> พอรายการหนึ่งหมด ก็มีรายการใหม่ ตราบใดที่ธุรกิจยังดำเนิน
+        </div>
+        <table class="ratio-table">
+          <tr><th>Ratio</th><th>สูตร</th><th>แปรผล</th><th>หมายเหตุ</th></tr>
+          <tr>
+            <td><strong>DSO</strong></td>
+            <td class="mono">Receivables / Sales(+VAT) × 365</td>
+            <td><span class="good">ลด = ดี</span> / <span class="bad">เพิ่ม = ระวัง</span></td>
+            <td>ใช้ Sales รวม VAT!</td>
+          </tr>
+          <tr>
+            <td><strong>DPO</strong></td>
+            <td class="mono">Payables / Purchases(+VAT) × 365</td>
+            <td><span class="good">เพิ่ม = ดี</span> / <span class="bad">ผิดปกติ = อาจจ่ายไม่ไหว</span></td>
+            <td>ใช้ Purchases ไม่ใช่ COGS!</td>
+          </tr>
+          <tr>
+            <td><strong>DIO</strong></td>
+            <td class="mono">Inventory / Sales(excl.VAT) × 365</td>
+            <td><span class="good">ลด = ดี</span> / <span class="bad">เพิ่ม = ขายช้า</span></td>
+            <td>ถ้ามี COGS ใช้แทน Sales</td>
+          </tr>
+          <tr>
+            <td><strong class="star">CCC ⭐</strong></td>
+            <td class="mono">DSO + DIO − DPO</td>
+            <td><span class="good">ยิ่งน้อยยิ่งดี / ติดลบ = ยอดเยี่ยม</span></td>
+            <td>Supermarket มักติดลบ 20–30 วัน</td>
+          </tr>
+          <tr>
+            <td><strong>WC / Sales %</strong></td>
+            <td class="mono">Op. WC / Net Sales × 100%</td>
+            <td><span class="good">ยิ่งน้อยยิ่งดี / ติดลบ = ดีมาก</span></td>
+            <td>—</td>
+          </tr>
+        </table>
+      ` },
+      { id: 'negwc', label: 'Negative WC — ดีหรือไม่ดี?', content: `
+        <div class="callout example">
+          <div class="callout-head">💡 Negative WC — ต้องดูที่มาเสมอ!</div>
+          <span class="good">✅ ดี (เชิงกลยุทธ์):</span> ลูกค้าจ่าย cash เร็ว ซัพพลายเออร์ให้ credit นาน<br>
+          ตัวอย่าง: Supermarket รับเงิน cash ทุกวัน แต่จ่าย supplier 30–60 วัน<br><br>
+          <span class="bad">⚠️ น่าห่วง:</span> จ่าย supplier ช้าเพราะไม่มีเงิน ยืด payables ผิดปกติ<br>
+          อาจทำให้ความสัมพันธ์กับ supplier พัง เสี่ยง supply disruption<br><br>
+          <strong>→ ต้องดูที่มาของ Negative WC เสมอ ไม่ใช่แค่ดูตัวเลข</strong>
+        </div>
+      ` },
+      { id: 'capex', label: 'Capital Expenditure Analysis', content: `
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent)">Maintenance Capex</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">
+              รักษาระดับปัจจุบัน ไม่ได้เพิ่ม capacity<br>
+              ≈ ค่าเสื่อมราคา (ถ้า asset base ไม่โต)<br>
+              <em>ถ้า Capex &lt; D&A ต่อเนื่อง → assets กำลัง decay</em>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent2)">Growth Capex</div>
+            <div style="font-size:13px;margin-top:8px;line-height:1.7">
+              ขยาย capacity / เข้าตลาดใหม่<br>
+              ทำให้ FCF ติดลบในระยะสั้น แต่สร้างรายได้ในอนาคต<br>
+              <em>ต้องตรวจ: Revenue โตตาม Capex ที่ลงไปไหม?</em>
+            </div>
+          </div>
+        </div>
+        <table class="ratio-table">
+          <tr><th>Ratio</th><th>สูตร</th><th>ความหมาย</th><th>ค่าอ้างอิง</th></tr>
+          <tr>
+            <td><strong>Capex/Sales</strong></td>
+            <td class="mono">Capex / Net Sales</td>
+            <td>% รายได้ที่ใช้ลงทุน</td>
+            <td>Telecom ~15% / Retail ~2%</td>
+          </tr>
+          <tr>
+            <td><strong>Capex/D&A</strong></td>
+            <td class="mono">Capex / Depreciation</td>
+            <td>&gt;1 = กำลังขยาย | &lt;1 = ลด invest</td>
+            <td>&gt;1.0x ถ้าต้องการ growth</td>
+          </tr>
+          <tr>
+            <td><strong>Asset Turnover</strong></td>
+            <td class="mono">Sales / Capital Employed</td>
+            <td>รายได้ต่อทุนลงทุน 1 หน่วย</td>
+            <td>ขึ้นกับ industry</td>
+          </tr>
+        </table>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ Capex trap ที่พบบ่อย</div>
+          Capex พุ่ง แต่ Revenue ไม่ตาม = เงินลงทุนไม่ efficient<br>
+          Capex ต่ำมากเพื่อ "ทำให้ FCF ดี" แต่ asset กำลังเสื่อม → ปัญหาในอนาคต
+        </div>
+      ` }
+    ]
+  },
+  ch12: {
+    title: 'Financing — การจัดหาเงินทุน',
+    subtitle: 'บทที่ 12 — วิเคราะห์โครงสร้างหนี้และความสามารถชำระหนี้',
+    sections: [
+      { id: 'analysis', label: 'Dynamic vs Static Analysis', content: `
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent4)">Dynamic Analysis (ระยะยาว)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ใช้ Cash Flow Statement หลายปี<br>
+              FCF ดีขึ้นหรือแย่ลง?<br>
+              หาทุนจากไหน? หนี้? ทุน? Retained earnings?<br>
+              Dividend policy สอดคล้องกับ growth ไหม?<br>
+              → บอก <strong>"ทิศทาง"</strong> ของบริษัท
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent5)">Static Analysis (วันนี้)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ระดับหนี้ ณ ปัจจุบัน<br>
+              Net Debt/EBITDA: ชำระได้ไหม?<br>
+              ICR: ดอกเบี้ยคุ้มกำไรไหม?<br>
+              Maturity structure: หนี้ครบกำหนดเมื่อไร?<br>
+              → บอก <strong>"ฐานะ"</strong> ของบริษัทวันนี้
+            </div>
+          </div>
+        </div>
+      ` },
+      { id: 'ratios', label: 'Financing Ratios', content: `
+        <table class="ratio-table">
+          <tr><th>Ratio</th><th>สูตร</th><th>ค่าอ้างอิง</th><th>หมายเหตุ</th></tr>
+          <tr>
+            <td><strong class="star">Net Debt/EBITDA ⭐</strong></td>
+            <td class="mono">Net Debt / EBITDA</td>
+            <td><span class="good">&lt;2.5x</span> / <span class="bad">2.5–5x ระวัง / &gt;5x Junk</span></td>
+            <td>Standard ใน debt covenants ทั่วโลก</td>
+          </tr>
+          <tr>
+            <td><strong class="star">ICR ⭐</strong></td>
+            <td class="mono">EBIT / Net Interest Expense</td>
+            <td><span class="good">&gt;3x ดี</span> / 2–3x borderline / <span class="bad">&lt;2x อันตราย</span></td>
+            <td>วัดว่ากำไรจาก ops cover ดอกเบี้ยกี่เท่า</td>
+          </tr>
+          <tr>
+            <td><strong>Gearing (D/E)</strong></td>
+            <td class="mono">Net Debt / Equity</td>
+            <td><span class="good">&lt;1x conventional safe</span></td>
+            <td>ปัจจุบันใช้น้อยลง</td>
+          </tr>
+          <tr>
+            <td><strong>DSCR</strong></td>
+            <td class="mono">EBITDA / (Interest + Principal)</td>
+            <td><span class="good">&gt;1.25x ดี</span> / <span class="bad">&lt;1.0x อันตราย</span></td>
+            <td>ใช้มากใน Project Finance</td>
+          </tr>
+        </table>
+        <div class="callout example">
+          <div class="callout-head">💡 Net Debt/EBITDA ตามอุตสาหกรรม</div>
+          Food Retail: 1.9–2.0x | Telecom: 2.2–2.3x | Pharma: ~0.5x<br>
+          Steel: 2–3x | Aerospace & Defence: 0.2–0.4x
+        </div>
+      ` }
+    ]
+  },
+  ch13: {
+    title: 'ROCE & ROE — Return on Capital',
+    subtitle: 'บทที่ 13 — Profitability และ Leverage Effect',
+    sections: [
+      { id: 'roce', label: 'ROCE — Return on Capital Employed', content: `
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label">Margin (กำไรต่อยอดขาย)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              EBIT Margin = EBIT / Sales<br>
+              บอกว่าทำกำไรได้ <em>"เท่าไรต่อยอดขาย"</em><br>
+              บริษัท A: margin 30%<br>
+              <em>แต่ไม่รู้ว่าใช้ทุนคุ้มไหม!</em>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label" style="color:var(--accent2)">Profitability (กำไรต่อทุนลงทุน)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ROCE = EBIT(1-t) / Capital Employed<br>
+              บอกว่าทำกำไรได้ <em>"เท่าไรต่อเงินลงทุน"</em><br>
+              บริษัท A: ROCE 8%, บริษัท B: ROCE 25%<br>
+              → <strong class="good">B ดีกว่า แม้ margin จะต่ำกว่า!</strong>
+            </div>
+          </div>
+        </div>
+        <div class="callout formula">
+          <div class="callout-head">📐 ROCE ⭐⭐⭐</div>
+          ROCE = EBIT × (1 − Tax Rate) / Capital Employed<br>
+               = NOPAT / Capital Employed<br><br>
+          แยกได้: ROCE = Operating Margin × Asset Turnover<br>
+                       = [EBIT(1-t)/Sales] × [Sales/CE]<br><br>
+          <span class="good">ROCE &gt; WACC → สร้างมูลค่า ✅</span><br>
+          <span class="bad">ROCE &lt; WACC → ทำลายมูลค่า ❌</span>
+        </div>
+        <div class="callout example">
+          <div class="callout-head">💡 Eutelsat vs Adecco — ROCE เท่ากันแต่มาคนละทาง</div>
+          Eutelsat (ดาวเทียม): Margin สูง ~30% แต่ Asset Turnover ต่ำ<br>
+          Adecco (จ้างงาน): Margin ต่ำ ~5% แต่ Asset Turnover สูงมาก<br><br>
+          ROCE = Margin × Turnover<br>
+          Eutelsat: 30% × 0.27 ≈ 8% | Adecco: 5% × 1.6 ≈ 8%<br>
+          → <strong>ถึง ROCE เท่ากันได้ด้วยเส้นทางต่างกันสิ้นเชิง</strong>
+        </div>
+      ` },
+      { id: 'leverage', label: 'Leverage Effect & ROE', content: `
+        <div class="callout formula">
+          <div class="callout-head">📐 Leverage Effect Formula ⭐⭐⭐</div>
+          ROE = ROCE + (ROCE − i) × D/E<br><br>
+          โดยที่:<br>
+          ROCE = After-tax ROCE = EBIT(1-t) / CE<br>
+          i    = After-tax Cost of Debt = FE×(1-t) / D<br>
+          D/E  = Gearing (Net Debt / Equity)<br><br>
+          ตรวจสอบ: ROE = PBT(1-t) / Equity (ต้องเท่ากัน!)
+        </div>
+        <div class="grid2">
+          <div class="stat-box">
+            <div class="label good">Positive Leverage (ROCE &gt; i)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ROCE=10%, i=4%, D/E=0.5<br>
+              ROE = 10% + (10%-4%) × 0.5<br>
+              = <strong class="good">13% &gt; ROCE ✅</strong><br>
+              การกู้เงินช่วยขยาย ROE!
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="label bad">Negative Leverage (ROCE &lt; i)</div>
+            <div style="font-size:13px;margin-top:10px;line-height:1.7">
+              ROCE=2%, i=4%, D/E=0.5<br>
+              ROE = 2% + (2%-4%) × 0.5<br>
+              = <strong class="bad">1% &lt; ROCE ❌</strong><br>
+              การกู้เงินทำให้ ROE แย่ลง!
+            </div>
+          </div>
+        </div>
+        <div class="callout warning">
+          <div class="callout-head">⚠️ จุดสอบออก</div>
+          ROE สูงอาจดีจาก ROCE สูง (ดี) หรือ Leverage สูง (เสี่ยง)<br>
+          → ต้องดูทั้งสองอย่างเสมอ!
+        </div>
+        <table class="ratio-table">
+          <tr><th>ขั้นตอน</th><th>สูตร</th><th>ตัวเลขมาจาก</th></tr>
+          <tr><td>1. หา ROCE</td><td class="mono">EBIT×(1-t) / CE</td><td>EBIT จาก P&L, CE = FA+WC จาก BS</td></tr>
+          <tr><td>2. หา After-tax i</td><td class="mono">FE×(1-t) / D</td><td>FE = Net Financial Expense จาก P&L</td></tr>
+          <tr><td>3. หา Gearing</td><td class="mono">Net Debt / Equity</td><td>จาก Balance Sheet</td></tr>
+          <tr><td>4. Leverage Effect</td><td class="mono">(ROCE − i) × D/E</td><td>จากขั้นตอน 1–3</td></tr>
+          <tr><td>5. คำนวณ ROE</td><td class="mono">ROCE + Leverage Effect</td><td>ตรวจสอบ: = PBT(1-t)/E</td></tr>
+          <tr><td>6. แยก ROCE</td><td class="mono">Op.Margin × Asset Turnover</td><td>วิเคราะห์ว่ามาจาก margin หรือ turnover</td></tr>
+        </table>
+      ` }
+    ]
+  },
+  ch14: {
+    title: 'Conclusion — สรุปการวิเคราะห์',
+    subtitle: 'บทที่ 14 — 5 คำถามหลักและ 6 หลักการอ่าน Ratio',
+    sections: [
+      { id: 'q5', label: '5 คำถามหลักในการสรุป', content: `
+        <table class="ratio-table">
+          <tr><th>#</th><th>คำถาม</th><th>ดูจาก</th><th>สัญญาณเตือน</th></tr>
+          <tr><td class="star">1</td><td>Margin แข็งแกร่งและเติบโตไหม?</td><td>EBITDA/EBIT margin trend 3–5 ปี, Scissors Effect</td><td class="bad">Margin ลดต่อเนื่อง</td></tr>
+          <tr><td class="star">2</td><td>บริหาร Working Capital ได้ดีไหม?</td><td>DSO, DPO, DIO, WC/Sales, CCC trend</td><td class="bad">DSO พุ่ง, CCC ยืดยาว</td></tr>
+          <tr><td class="star">3</td><td>การลงทุนสมเหตุสมผลไหม?</td><td>Capex/Sales, FCF, Asset Turnover trend</td><td class="bad">Capex พุ่งแต่ FCF ยังติดลบ</td></tr>
+          <tr><td class="star">4</td><td>มีหนี้เกินไปไหม? ชำระได้ไหม?</td><td>Net Debt/EBITDA, ICR, Debt maturity</td><td class="bad">ND/EBITDA &gt;4x, ICR &lt;2x</td></tr>
+          <tr><td class="star">5</td><td>ผลตอบแทนสูงพอไหม? มาจากไหน?</td><td>ROCE vs WACC, ROE, Leverage Effect</td><td class="bad">ROCE &lt; WACC ทำลายมูลค่า</td></tr>
+        </table>
+      ` },
+      { id: 'principles', label: '6 หลักการอ่าน Ratio ที่ถูกวิธี', content: `
+        <div class="grid2">
+          <div class="stat-box"><div class="label" style="color:var(--accent)">1. ดู Trend ไม่ใช่แค่ Snapshot</div><div style="font-size:13px;margin-top:8px;line-height:1.7">Ratio ปีเดียวบอกอะไรน้อยมาก ดู 3–5 ปี</div></div>
+          <div class="stat-box"><div class="label" style="color:var(--accent2)">2. เปรียบเทียบกับ Peer</div><div style="font-size:13px;margin-top:8px;line-height:1.7">ดีหรือไม่ดีต้องเทียบกับอุตสาหกรรมเดียวกัน</div></div>
+          <div class="stat-box"><div class="label" style="color:var(--accent4)">3. เชื่อมโยงกับกลยุทธ์</div><div style="font-size:13px;margin-top:8px;line-height:1.7">ROCE ต่ำอาจเป็น startup ที่กำลัง invest ไม่ใช่แค่ failure</div></div>
+          <div class="stat-box"><div class="label" style="color:var(--accent5)">4. ระวัง Seasonality</div><div style="font-size:13px;margin-top:8px;line-height:1.7">Ratio ปลายปีอาจไม่ representative ของทั้งปี</div></div>
+          <div class="stat-box"><div class="label" style="color:var(--accent3)">5. ดู Cash Flow ประกอบเสมอ</div><div style="font-size:13px;margin-top:8px;line-height:1.7">กำไรสูงแต่ CF ต่ำ = น่ากังวล</div></div>
+          <div class="stat-box"><div class="label">6. เข้าใจ "ทำไม?" ก่อนสรุป</div><div style="font-size:13px;margin-top:8px;line-height:1.7">Ratio เป็น Symptom ไม่ใช่ Diagnosis — ต้องหา Root Cause</div></div>
+        </div>
+        <div class="callout tip" style="margin-top:20px">
+          <div class="callout-head">🎯 สรุปหลักการ</div>
+          Financial Analysis ≠ Ratio Calculator<br>
+          ต้องเข้าใจว่า <strong>"ทำไม?"</strong> และ <strong>"เชื่อมโยงกับธุรกิจจริงอย่างไร?"</strong>
+        </div>
+      ` }
+    ]
+  }
+};
+
+// =====================================================================
+// FLASHCARDS DATA
+// =====================================================================
+const flashcardsData = [
+  { ch: 'Ch.1', q: 'เงื่อนไขของ Value Creation คืออะไร?', a: 'ROCE > WACC (ผลตอบแทน > ต้นทุนของเงินทุน)', formula: 'Value Creation = ROCE > Cost of Capital (WACC)' },
+  { ch: 'Ch.1', q: '3 การตัดสินใจหลักของ CFO มีอะไรบ้าง?', a: '1) Investment Decision — ลงทุนในสินทรัพย์ใด\n2) Financing Decision — หนี้หรือทุนในสัดส่วนใด\n3) Dividend Decision — จ่ายปันผลหรือเก็บไว้ขยายกิจการ' },
+  { ch: 'Ch.1', q: 'Debt vs Equity ต่างกันอย่างไรในฐานะผู้ให้ทุน?', a: 'Debt: รับดอกเบี้ยคงที่ + คืนต้น มีสิทธิ์เรียกร้องก่อน ความเสี่ยงต่ำกว่า\nEquity: รับส่วนแบ่งกำไร + capital gain รับความเสี่ยงเต็ม แต่ upside ไม่จำกัด' },
+  { ch: 'Ch.1', q: 'Primary Market vs Secondary Market ต่างกันอย่างไร?', a: 'Primary Market: ออกหลักทรัพย์ใหม่ เงินไปถึงบริษัท (IPO, Bond issuance)\nSecondary Market: ซื้อขายหลักทรัพย์เดิมระหว่างนักลงทุน เงินไม่ถึงบริษัท' },
+  { ch: 'Ch.2', q: 'FCF คำนวณอย่างไร?', a: 'FCF = EBITDA − Δ Working Capital − Capital Expenditure', formula: 'FCF = EBITDA − ΔWC − Capex' },
+  { ch: 'Ch.2', q: '4 วงจรเงินสดของบริษัทมีอะไรบ้าง?', a: '1) Operating Cycle: ซื้อวัตถุดิบ → ผลิต → ขาย → เก็บเงิน\n2) Investment Cycle: ซื้อสินทรัพย์ถาวร\n3) Debt Cycle: กู้ → ดอกเบี้ย → คืนต้น\n4) Equity Cycle: ออกหุ้น → ทุน → ปันผล' },
+  { ch: 'Ch.3', q: 'EBITDA คืออะไร และทำไมนักวิเคราะห์ชอบใช้?', a: 'Earnings Before Interest, Taxes, Depreciation & Amortisation\nข้อดี: ไม่ถูก distort โดยนโยบายบัญชี, โครงสร้างทุน, หรืออัตราภาษีที่ต่างกัน\nข้อเสีย: ไม่รวม Capex' },
+  { ch: 'Ch.3', q: 'ลำดับจาก Net Sales ไปถึง EBIT คืออะไร?', a: 'Net Sales → PRODUCTION (±Δ Inventory +Own Use) → GROSS MARGIN (−Raw Materials) → VALUE ADDED (−External Costs) → EBITDA (−Personnel/Taxes) → EBIT (−D&A)', formula: 'Net Sales → Production → Gross → VA → EBITDA → EBIT' },
+  { ch: 'Ch.3', q: 'By-Nature vs By-Function Income Statement ต่างกันอย่างไร?', a: 'By-Nature (ยุโรป/IFRS): แยกตามประเภทต้นทุน — Raw Material, Personnel, D&A เห็น Value Added ชัด\nBy-Function (US GAAP): แยกตาม Function — COGS, Selling, G&A เห็น Gross Margin ชัด\n→ NET INCOME เท่ากัน แต่ breakdown ต่างกัน' },
+  { ch: 'Ch.3', q: 'Value Added คืออะไร และแบ่งให้ใครบ้าง?', a: 'Value Added = Gross Margin − External Costs = EBITDA + Personnel Costs\n= มูลค่าที่บริษัทสร้างเพิ่มเกินจาก External Costs\nแบ่งให้: พนักงาน + รัฐ (Taxes) + เจ้าหนี้ (Interest) + ผู้ถือหุ้น', formula: 'VA = Gross Margin − External Costs' },
+  { ch: 'Ch.6', q: 'Goodwill คำนวณอย่างไร และ IFRS ปฏิบัติอย่างไร?', a: 'Goodwill = Purchase Price − Fair Value of Net Assets Acquired\nIFRS: ไม่ amortise แต่ทดสอบ Impairment ทุกปี\nถ้า DCF ของ CGU < carrying value → Impairment loss (non-recurring)', formula: 'Goodwill = Price − FV of Net Assets' },
+  { ch: 'Ch.4', q: 'Capital Employed คือสูตรอะไร?', a: 'CE = Fixed Assets + Working Capital\n= Shareholders\' Equity + Net Debt (Invested Capital)\nทั้งสองด้านต้องเท่ากันเสมอ!', formula: 'CE = Fixed Assets + WC = E + Net Debt' },
+  { ch: 'Ch.4', q: 'Net Debt คำนวณอย่างไร?', a: 'Net Debt = Borrowings − Cash − Marketable Securities\nNet Debt ติดลบ = Net Cash (ดีมาก!)', formula: 'Net Debt = Borrowings − Cash − Mkt Securities' },
+  { ch: 'Ch.4', q: 'Working Capital คือสูตรอะไร?', a: 'WC = Trade Receivables + Inventories − Trade Payables', formula: 'WC = Receivables + Inventory − Payables' },
+  { ch: 'Ch.5', q: 'ทำไมกำไร ≠ Cash Flow? ยกตัวอย่าง 2 สาเหตุ', a: '1) D&A — ลดกำไรแต่ไม่ใช่ cash จ่าย → ต้องบวกกลับใน CF\n2) Δ WC — WC เพิ่มใช้ cash เพิ่มแต่กำไรไม่เปลี่ยน\n3) Revenue Recognition — ขายเชื่อ กำไรทันทีแต่ยังไม่ได้ cash' },
+  { ch: 'Ch.5', q: 'Operating Cash Flow vs FCF ต่างกันอย่างไร?', a: 'Operating CF = EBITDA − Δ Working Capital\nFCF = Operating CF − Capex\nFCF อยู่หลัง Capex แล้ว!', formula: 'Op. CF = EBITDA − ΔWC | FCF = Op.CF − Capex' },
+  { ch: 'Ch.6', q: 'Equity Method ใช้เมื่อถือหุ้นเท่าไร?', a: 'ถือหุ้น 20–50% (Significant Influence)\nบันทึกแค่สัดส่วน Equity และกำไร/ขาดทุน ไม่รวม Revenue/Assets โดยตรง' },
+  { ch: 'Ch.9', q: 'Scissors Effect คืออะไร?', a: 'เกิดเมื่อรายได้โตช้า แต่ Fixed Costs โตเร็ว → margin ถูกบีบแคบลงเร็วมาก เช่น Sales โต 5% แต่ Fixed Cost โต 10%' },
+  { ch: 'Ch.9', q: 'Breakeven Sales = ?', a: 'Breakeven Sales = Fixed Costs / CM Ratio\nwhere CM Ratio (m) = Contribution Margin / Sales\n= (Sales − Variable Costs) / Sales', formula: 'BE = FC / m = FC / (CM/Sales)' },
+  { ch: 'Ch.9', q: 'Degree of Operating Leverage (DOL) = ?', a: 'DOL = Contribution Margin / EBIT\n= (Sales − Variable Costs) / EBIT\nDOL สูง = เสี่ยงสูง: Sales ลด 1% → EBIT ลด DOL%', formula: 'DOL = CM / EBIT' },
+  { ch: 'Ch.11', q: 'DSO คำนวณอย่างไร และใช้ Sales รวม VAT ไหม?', a: 'DSO = Receivables / Sales(+VAT) × 365\nใช้ Sales รวม VAT เพราะ Receivables บน BS รวม VAT', formula: 'DSO = Receivables / Sales(incl.VAT) × 365' },
+  { ch: 'Ch.11', q: 'DPO คำนวณอย่างไร และใช้ COGS หรือ Purchases?', a: 'DPO = Payables / Purchases(+VAT) × 365\nใช้ Purchases ไม่ใช่ COGS เพราะ Payable เกิดจากการซื้อ', formula: 'DPO = Payables / Purchases(incl.VAT) × 365' },
+  { ch: 'Ch.11', q: 'Cash Conversion Cycle (CCC) คำนวณอย่างไร?', a: 'CCC = DSO + DIO − DPO\nยิ่งน้อยยิ่งดี ติดลบ = ได้เงินก่อนต้องจ่าย (เช่น Supermarket)', formula: 'CCC = DSO + DIO − DPO' },
+  { ch: 'Ch.12', q: 'Net Debt/EBITDA ค่าปลอดภัยคือเท่าไร?', a: '< 2.5x = ปลอดภัย\n2.5–5x = ต้องระวัง\n> 5x = Junk / High Yield\nแต่ขึ้นกับ sector!' },
+  { ch: 'Ch.12', q: 'ICR คืออะไร และค่าที่ดีคือเท่าไร?', a: 'ICR = Interest Coverage Ratio = EBIT / Net Interest Expense\n> 3x = ดี\n2–3x = borderline\n< 2x = Lender กังวล', formula: 'ICR = EBIT / Net Interest Expense' },
+  { ch: 'Ch.13', q: 'ROCE = ? และแยกออกเป็นอะไรได้?', a: 'ROCE = EBIT×(1-t) / Capital Employed\n= NOPAT / CE\n\nแยกได้: ROCE = Operating Margin × Asset Turnover\n= [EBIT(1-t)/Sales] × [Sales/CE]', formula: 'ROCE = EBIT(1-t)/CE = Margin × Asset Turnover' },
+  { ch: 'Ch.13', q: 'Leverage Effect Formula คืออะไร?', a: 'ROE = ROCE + (ROCE − i) × D/E\nโดยที่ i = After-tax Cost of Debt\nถ้า ROCE > i → Positive Leverage (ROE > ROCE)\nถ้า ROCE < i → Negative Leverage (ROE < ROCE)', formula: 'ROE = ROCE + (ROCE − i) × D/E' },
+  { ch: 'Ch.13', q: 'บริษัท A: ROCE 10%, i 4%, D/E 0.5 — ROE = ?', a: 'ROE = 10% + (10% − 4%) × 0.5\n= 10% + 3%\n= 13%\nPositive Leverage: ROE > ROCE ✅', formula: 'ROE = 10% + 6% × 0.5 = 13%' },
+  { ch: 'Ch.14', q: '6 หลักการอ่าน Ratio ที่ถูกวิธีมีอะไรบ้าง?', a: '1) ดู Trend ไม่ใช่แค่ Snapshot (3–5 ปี)\n2) เปรียบเทียบกับ Peer ในอุตสาหกรรมเดียวกัน\n3) เชื่อมโยงกับกลยุทธ์\n4) ระวัง Seasonality\n5) ดู Cash Flow Statement ประกอบเสมอ\n6) เข้าใจ "ทำไม?" ก่อนสรุป' },
+  { ch: 'Ch.1', q: 'Debt vs Equity ต่างกันอย่างไรในฐานะแหล่งทุน?', a: 'Debt: ดอกเบี้ยคงที่ + คืนต้น, มีสิทธิ์เรียกร้องก่อน, ความเสี่ยงต่ำ\nEquity: รับส่วนแบ่งกำไร + capital gain, รับความเสี่ยงเต็ม, upside ไม่จำกัด', formula: 'Debt = fixed claim | Equity = residual claim' },
+  { ch: 'Ch.1', q: 'Primary Market vs Secondary Market ต่างกันอย่างไร?', a: 'Primary: ออกหลักทรัพย์ใหม่ เงินไปถึงบริษัทโดยตรง (IPO, Bond issuance)\nSecondary: ซื้อขายหลักทรัพย์เดิมระหว่างนักลงทุน เงินไม่ถึงบริษัท' },
+  { ch: 'Ch.2', q: 'Operating Cycle ของ Supermarket vs โรงงานเหล้าคอนยัค ต่างกันอย่างไร?', a: 'Supermarket: ~7–14 วัน (สินค้าหมุนเร็ว รับ cash ทันที)\nคอนยัค: ~7 ปี (ต้องบ่มนาน WC สูงมาก ต้องหาเงินระยะยาว)\n→ ยิ่ง cycle ยาว ยิ่งต้องการ WC มาก' },
+  { ch: 'Ch.4', q: 'Solvency vs Liquidity ต่างกันอย่างไร?', a: 'Liquidity: จ่ายหนี้ระยะสั้นได้ไหม? ดู Current Assets vs Current Liabilities\nSolvency: ถ้าขายสินทรัพย์ทั้งหมด คืนหนี้ได้ไหม? มองทั้งงบดุล\nบริษัทอาจ illiquid ชั่วคราว แต่ยัง solvent' },
+  { ch: 'Ch.4', q: 'NAV (Net Asset Value) คืออะไร?', a: 'NAV = Book Value of Equity = Total Assets − Total Liabilities\nเป็น liquidation value ตามบัญชี\nข้อจำกัด: Book value ≠ Market value (assets อาจมีค่า/ด้อยค่ากว่าบัญชี)', formula: 'NAV = Total Assets − Total Liabilities' },
+  { ch: 'Ch.5', q: 'Revenue = 100M, Trade Receivables เพิ่ม 15M → Operating Receipts = ?', a: 'Operating Receipts = Revenue − Δ Receivables = 100M − 15M = 85M\nเพราะ 15M ยังเก็บเงินไม่ได้ ค้างอยู่ใน Receivables\n→ DSO ยืด = Cash ได้น้อยกว่า Revenue', formula: 'Op. Receipts = Revenue − Δ Receivables' },
+  { ch: 'Ch.7', q: 'Deferred Tax Liability เกิดขึ้นเมื่อใด?', a: 'เกิดเมื่อกำไรทางบัญชี > กำไรทางภาษีในปีปัจจุบัน\n→ จ่ายภาษีน้อยกว่าที่ควรในปีนี้ ต้องจ่ายเพิ่มในอนาคต\nAnalyst: รวมเป็น long-term liability, watch ถ้า DTA สูงแต่ไม่แน่ว่า realisable' },
+  { ch: 'Ch.7', q: 'IFRS 16 ส่งผลต่อ Financial Statements อย่างไร?', a: 'บังคับนำ Operating Leases เข้า Balance Sheet\nผล: Net Debt ↑ (เพิ่ม lease liability), EBITDA ↑ (ค่าเช่าเปลี่ยนเป็น D&A+interest)\nAnalyst: ต้องปรับ Net Debt/EBITDA ให้ comparable ระหว่างก่อน/หลัง IFRS 16' },
+  { ch: 'Ch.8', q: '4-Stage Financial Analysis Roadmap คืออะไร?', a: '1. Wealth Creation: Sales growth, Margin, Scissors Effect\n2. Investment: WC trend, Capex (Maint. vs Growth)\n3. Financing: Net Debt/EBITDA, ICR, CF structure\n4. Profitability: ROCE vs WACC, ROE, Leverage Effect', formula: 'Wealth → Investment → Financing → Profitability' },
+  { ch: 'Ch.8', q: 'Red Flags ที่ต้องสังเกตในการวิเคราะห์ทางการเงินมีอะไรบ้าง?', a: '1. Margin ลดต่อเนื่องขณะ Revenue โต (Scissors Effect)\n2. DSO ยืด — Receivables โตเร็วกว่า Revenue\n3. FCF ติดลบทั้งที่ EBITDA บวก (WC/Capex ดูด cash)\n4. Net Debt/EBITDA สูงขึ้นทุกปีโดยไม่มี FCF support' },
+  { ch: 'Ch.11', q: 'Capex/D&A = 0.6x หมายความว่าอะไร?', a: 'ลงทุนน้อยกว่าค่าเสื่อม = assets กำลัง "decay"\nอาจทำให้ FCF ดูดีระยะสั้น แต่ระยะยาว capacity จะลดลง\nน่าห่วงถ้าต่อเนื่องหลายปีโดยไม่มีแผนลงทุน', formula: 'Capex/D&A > 1 = expanding | < 1 = shrinking' },
+  { ch: 'Ch.11', q: 'Maintenance Capex vs Growth Capex ต่างกันอย่างไร?', a: 'Maintenance: รักษาระดับปัจจุบัน ≈ ค่าเสื่อมราคา\nGrowth: ขยาย capacity / เข้าตลาดใหม่ ทำให้ FCF ติดลบระยะสั้น\n→ ต้องถามว่า Revenue โตตาม Growth Capex ที่ลงไปไหม?' },
+];
+
+// =====================================================================
+// QUIZ DATA
+// =====================================================================
+const quizData = [
+  {
+    ch: 'Ch.1',
+    q: 'บริษัท A กำไร 10M ลงทุน 200M (ROCE = 5%) ดอกเบี้ยเงินฝากธนาคาร 7% — บริษัท A กำลังทำอะไร?',
+    choices: ['สร้างมูลค่า เพราะมีกำไร', 'ทำลายมูลค่า เพราะ ROCE < Cost of Capital', 'เป็นกลาง เพราะมีกำไรพอดี', 'ข้อมูลไม่เพียงพอตัดสิน'],
+    ans: 1,
+    exp: 'Value Creation เกิดเมื่อ ROCE > WACC/Cost of Capital เท่านั้น แม้บริษัทจะมีกำไร 10M แต่ถ้าผลตอบแทน 5% < โอกาสทางเลือก 7% นั่นคือการทำลายมูลค่า'
+  },
+  {
+    ch: 'Ch.2',
+    q: 'FCF = EBITDA − Δ WC − Capex ถ้า EBITDA = 100, WC เพิ่ม 20, Capex = 30 → FCF = ?',
+    context: 'EBITDA=100, ΔWC=+20 (เพิ่ม), Capex=30',
+    choices: ['50', '150', '70', '80'],
+    ans: 0,
+    exp: 'FCF = 100 − 20 − 30 = 50\nเมื่อ WC เพิ่ม → ใช้ cash เพิ่ม จึงหักออก\nCapex = ซื้อสินทรัพย์ถาวร = ลด cash'
+  },
+  {
+    ch: 'Ch.3',
+    q: 'ทำไมนักวิเคราะห์ชอบ EBITDA มากกว่า Net Income?',
+    choices: [
+      'เพราะ EBITDA คำนวณง่ายกว่า',
+      'เพราะ EBITDA ไม่ถูก distort โดยนโยบายบัญชีและโครงสร้างทุน จึงเปรียบเทียบข้ามบริษัทได้',
+      'เพราะ EBITDA รวม Capex แล้ว',
+      'เพราะ Net Income ไม่แม่นยำพอ'
+    ],
+    ans: 1,
+    exp: 'EBITDA ไม่ถูกกระทบโดย: (1) ค่าเสื่อมที่แต่ละบริษัทคิดต่างกัน (2) โครงสร้างทุน (หนี้มาก/น้อย) (3) อัตราภาษีที่ต่างกันในแต่ละประเทศ\nข้อเสีย: ไม่รวม Capex'
+  },
+  {
+    ch: 'Ch.3',
+    q: 'บริษัทสองแห่งมี Net Income เท่ากัน แต่ใช้ Income Statement ต่างรูปแบบ — ข้อใดถูก?',
+    choices: [
+      'By-Function แสดง Value Added ชัดกว่า By-Nature',
+      'By-Nature เห็น Gross Margin ชัดกว่า เพราะแยก COGS ออกมา',
+      'By-Nature เห็น Value Added ชัด; By-Function เห็น Gross Margin ชัด; Net Income เท่ากัน',
+      'รูปแบบไม่มีผลต่อ EBITDA แต่ Net Income ต่างกัน'
+    ],
+    ans: 2,
+    exp: 'By-Nature (ยุโรป): แยกต้นทุนตามประเภท → เห็น Value Added ชัด\nBy-Function (US GAAP): แยกตาม Function → เห็น Gross Profit ชัด\nผลลัพธ์: EBITDA และ Net Income เท่ากันทั้งสองแบบ เพราะใช้ข้อมูลเดียวกัน'
+  },
+  {
+    ch: 'Ch.6',
+    q: 'บริษัทแม่ถือหุ้น 75% ในบริษัทลูก — Minority Interest = กี่%? แสดงใน BS ที่ไหน?',
+    choices: [
+      'Minority = 25%, อยู่ใน Current Liabilities',
+      'Minority = 25%, อยู่ใน Shareholders\' Equity ของงบรวม',
+      'Minority = 75%, อยู่ใน Long-term Debt',
+      'ไม่มี Minority Interest เพราะถือเกิน 50%'
+    ],
+    ans: 1,
+    exp: 'Full Consolidation รวม 100% แล้วหัก Minority = 100% − 75% = 25%\nMinority Interest อยู่ใน Equity section ของงบรวม (ไม่ใช่ Liability)\nNet Income: แสดง "attributable to owners of parent" = 75% ส่วนที่เหลือเป็น Minority share'
+  },
+  {
+    ch: 'Ch.4',
+    q: 'CE = Invested Capital หมายความว่าอะไร?',
+    choices: [
+      'Capital Employed มักสูงกว่า Invested Capital',
+      'Fixed Assets + WC = Equity + Net Debt (ทั้งสองด้านต้องเท่ากันเสมอ)',
+      'CE คำนวณเฉพาะฝั่ง Asset',
+      'Invested Capital ไม่รวม Net Debt'
+    ],
+    ans: 1,
+    exp: 'CE (Fixed Assets + WC) = Invested Capital (Equity + Net Debt)\nมองจากฝั่ง "ลงทุนอะไร" vs "เงินมาจากไหน" — ทั้งสองด้านต้องเท่ากันเสมอ ตามหลัก Double-entry'
+  },
+  {
+    ch: 'Ch.5',
+    q: 'บริษัทมี EBITDA = 200 และ WC เพิ่ม 40 → Operating Cash Flow = ?',
+    context: 'EBITDA = 200, ΔWC = +40 (WC เพิ่ม)',
+    choices: ['240', '160', '200', '140'],
+    ans: 1,
+    exp: 'Operating CF = EBITDA − Δ WC = 200 − 40 = 160\nWC เพิ่ม = cash ถูก "ดัก" ไว้ใน WC = CF ต่ำกว่า EBITDA\nจำ: Operating CF ≠ FCF (FCF = Operating CF − Capex)'
+  },
+  {
+    ch: 'Ch.6',
+    q: 'ถ้าบริษัทแม่ถือหุ้นในบริษัท B 35% — ใช้วิธีใดในการรวมบัญชี?',
+    choices: ['Full Consolidation', 'Equity Method', 'No Consolidation (Financial Investment)', 'Proportional Consolidation'],
+    ans: 1,
+    exp: '20–50% Significant Influence → Equity Method\nบันทึกแค่สัดส่วน Equity และกำไร/ขาดทุน ไม่รวม Revenue และ Assets โดยตรง\n> 50% → Full Consolidation\n< 20% → Financial Investment'
+  },
+  {
+    ch: 'Ch.9',
+    q: 'Scissors Effect เกิดเมื่อใด?',
+    choices: [
+      'Sales โตเร็วกว่า Fixed Costs → margin ขยายตัว',
+      'รายได้โตช้า แต่ Fixed Costs โตเร็ว → margin บีบแคบ',
+      'Variable Costs ลดลงเร็วกว่า Sales',
+      'Capex สูงกว่า Depreciation'
+    ],
+    ans: 1,
+    exp: 'Scissors Effect = ผลกรรไกร เกิดเมื่อรายได้โตช้าแต่ Fixed Costs โตเร็ว\nตัวอย่าง: Sales โต 5% แต่ Fixed Personnel Cost โต 10% → EBITDA Margin หดตัว\nบริษัทเสี่ยงสูง: Airlines, Car manufacturers, Heavy industry'
+  },
+  {
+    ch: 'Ch.11',
+    q: 'DSO ควรคำนวณโดยใช้ Sales รวม VAT หรือไม่รวม VAT?',
+    choices: [
+      'ไม่รวม VAT เพราะเป็น Net Sales จาก P&L',
+      'รวม VAT เพราะ Trade Receivables บน Balance Sheet รวม VAT ด้วย',
+      'ขึ้นอยู่กับนโยบายบัญชีของบริษัท',
+      'ใช้ได้ทั้งสองแบบ ผลเหมือนกัน'
+    ],
+    ans: 1,
+    exp: 'DSO = Receivables / Sales(+VAT) × 365\nต้องใช้ Sales รวม VAT เพราะ Trade Receivables ที่แสดงใน Balance Sheet รวม VAT อยู่แล้ว\nถ้าใช้ Net Sales (ไม่รวม VAT) จะทำให้ DSO สูงเกินจริง'
+  },
+  {
+    ch: 'Ch.12',
+    q: 'ICR = 1.8x หมายความว่าอะไร?',
+    choices: [
+      'ดีมาก บริษัทปลอดภัย',
+      'Borderline ยอมรับได้',
+      'อันตราย Lender กังวล — EBIT cover ดอกเบี้ยได้เพียง 1.8 เท่า',
+      'ต้องเพิ่มหนี้เพิ่มเพื่อขยาย'
+    ],
+    ans: 2,
+    exp: 'ICR = EBIT / Net Interest Expense\n> 3x = ดี | 2–3x = borderline | < 2x = Lender กังวล\nICR 1.8x อยู่ในโซนอันตราย หมายความว่ากำไรจาก ops cover ดอกเบี้ยได้เพียง 1.8 เท่า — พอแต่ไม่มี buffer มาก'
+  },
+  {
+    ch: 'Ch.13',
+    q: 'ROCE = 8%, i = 6%, D/E = 2 → ROE = ?',
+    context: 'ROE = ROCE + (ROCE − i) × D/E',
+    choices: ['12%', '8%', '4%', '16%'],
+    ans: 0,
+    exp: 'ROE = 8% + (8% − 6%) × 2 = 8% + 4% = 12%\nPositive Leverage เพราะ ROCE (8%) > i (6%)\nยิ่ง D/E สูง leverage effect ยิ่งรุนแรง (ดีเมื่อ ROCE>i, แย่เมื่อ ROCE<i)'
+  },
+  {
+    ch: 'Ch.13',
+    q: 'บริษัท Eutelsat (ดาวเทียม) vs Adecco (จ้างงาน) มี ROCE เท่ากัน แต่...',
+    choices: [
+      'ทั้งสองมีทุกอย่างเหมือนกัน',
+      'Eutelsat มี margin สูง + turnover ต่ำ; Adecco มี margin ต่ำ + turnover สูง',
+      'Eutelsat มี turnover สูงกว่าเสมอ',
+      'Adecco มี Fixed Assets มากกว่า'
+    ],
+    ans: 1,
+    exp: 'ROCE = Operating Margin × Asset Turnover\nEutelsat: 30% margin × 0.27 turnover ≈ 8%\nAdecco: 5% margin × 1.6 turnover ≈ 8%\n→ ROCE เท่ากันแต่มาคนละเส้นทาง! ต้อง decompose เสมอ'
+  },
+  {
+    ch: 'Ch.14',
+    q: 'ถ้า ROCE < WACC บริษัทกำลังทำอะไร?',
+    choices: [
+      'สร้างมูลค่า เพราะมีกำไร',
+      'ทำลายมูลค่า แม้จะมีกำไรทางบัญชี',
+      'อยู่ในสถานะเป็นกลาง',
+      'จำเป็นต้องเพิ่มหนี้'
+    ],
+    ans: 1,
+    exp: 'ROCE < WACC = ทำลายมูลค่า (Value Destruction)\nแม้จะมีกำไรทางบัญชีก็ตาม เพราะบริษัทสร้างผลตอบแทนได้น้อยกว่าต้นทุนของเงินทุน\nเป็นหลักการสำคัญที่สุดของ Corporate Finance!'
+  },
+  {
+    ch: 'Ch.1',
+    q: 'CFO ที่ดีมองบทบาทตัวเองเป็นผู้ "ซื้อ" หรือ "ขาย" หลักทรัพย์?',
+    choices: [
+      'ผู้ซื้อเท่านั้น — ลด cost of capital ให้ต่ำที่สุด',
+      'ผู้ขายเท่านั้น — ขายหุ้นให้ได้ราคาสูงสุด',
+      'ทั้งสองบทบาท — ซื้อเงินทุน และขายหลักทรัพย์ของบริษัทให้นักลงทุน',
+      'ไม่ใช่ทั้งสอง — CFO แค่จัดการงบประมาณ'
+    ],
+    ans: 2,
+    exp: 'CFO มีสองบทบาท:\n1. ผู้ซื้อ (แบบดั้งเดิม): ต่อรองดอกเบี้ย commission ให้ต่ำที่สุด\n2. ผู้ขาย (มุมสมัยใหม่): ขายหุ้น/หุ้นกู้ของบริษัท ต้องสื่อสาร Value สร้าง Trust กับนักลงทุน'
+  },
+  {
+    ch: 'Ch.4',
+    q: 'Current Ratio = 0.8x หมายความว่าอะไร?',
+    choices: [
+      'บริษัทปลอดภัยมาก มี assets เกินหนี้',
+      'Current Assets น้อยกว่า Current Liabilities — ระวังสภาพคล่อง',
+      'Net Debt ต่ำ บริษัทแข็งแกร่ง',
+      'ไม่สามารถตัดสินได้จากค่าเดียว'
+    ],
+    ans: 1,
+    exp: 'Current Ratio = CA / CL = 0.8x หมาย CA < CL\nบริษัทมี current liabilities มากกว่า current assets\nแต่ต้องดู context: Supermarket มักมี ratio ต่ำกว่า 1 เพราะรับ cash ก่อน จ่าย supplier ทีหลัง\n→ ไม่ได้แปลว่าเสมอว่าแย่ ต้องดู industry'
+  },
+  {
+    ch: 'Ch.5',
+    q: 'Revenue = 200M, Receivables เพิ่ม 30M, D&A = 20M → Operating Receipts = ?',
+    context: 'Revenue=200M, ΔReceivables=+30M (เพิ่ม), D&A=20M',
+    choices: ['170M', '150M', '220M', '180M'],
+    ans: 0,
+    exp: 'Operating Receipts = Revenue − Δ Receivables = 200 − 30 = 170M\nD&A ไม่เกี่ยวกับ operating receipts (เป็น non-cash ใน P&L)\nReceivables เพิ่ม = เก็บเงินลูกค้าไม่ได้ yet → cash ได้น้อยกว่า revenue'
+  },
+  {
+    ch: 'Ch.7',
+    q: 'IFRS 16 ส่งผลอย่างไรต่อ Net Debt/EBITDA?',
+    choices: [
+      'Net Debt ลดลง, EBITDA ลดลง → ratio ไม่เปลี่ยน',
+      'Net Debt เพิ่มขึ้น, EBITDA เพิ่มขึ้น → ratio อาจลดลงเล็กน้อย',
+      'Net Debt ไม่เปลี่ยน, EBITDA ลดลง → ratio แย่ลง',
+      'ไม่มีผลต่อ ratio ใดๆ'
+    ],
+    ans: 1,
+    exp: 'IFRS 16 นำ Operating Lease เข้า Balance Sheet:\n→ Net Debt ↑ (เพิ่ม Lease Liability)\n→ EBITDA ↑ (ค่าเช่าเปลี่ยนเป็น D&A + Interest ซึ่งอยู่ใต้ EBITDA)\nผลลัพธ์: ratio มักลดลงเล็กน้อย แต่ต้องปรับให้ comparable เสมอ'
+  },
+  {
+    ch: 'Ch.8',
+    q: 'ทำไมนักวิเคราะห์ต้องดูข้อมูลอย่างน้อย 3 ปีก่อนสรุป?',
+    choices: [
+      'เพราะกฎหมายบังคับให้รายงาน 3 ปี',
+      'เพื่อเห็น trend และ detect deterioration ก่อนมันแย่มาก',
+      'เพราะ 1 ปีข้อมูลแม่นยำกว่า 3 ปี',
+      'เพื่อคำนวณ ROCE เฉลี่ย'
+    ],
+    ans: 1,
+    exp: 'Financial analysis ต้องดู trend หลายปีเพราะ:\n1 ปีอาจเป็น anomaly — ปีแย่อาจจาก non-recurring item\nDetective ต้องหา pattern และ causal links\nDetect deterioration ก่อนมันปรากฏในตัวเลขชัดๆ = ขายหุ้น/ลดสินเชื่อได้ทันเวลา'
+  },
+  {
+    ch: 'Ch.11',
+    q: 'บริษัทมี Capex/Sales = 18% แต่ Telecom industry average = 15% และ FCF ยังติดลบ — สัญญาณอะไร?',
+    choices: [
+      'บริษัทลงทุนเยอะ = ดี',
+      'น่าเป็นห่วง: ลงทุนเกิน industry โดยยังไม่เห็นผล — ต้องตรวจ Revenue growth',
+      'FCF ติดลบชั่วคราว ปกติ',
+      'ควรเพิ่ม Capex อีก'
+    ],
+    ans: 1,
+    exp: 'Capex/Sales สูงกว่า industry = ลงทุนหนักกว่า peer\nถ้า FCF ยังติดลบ = เงินลงทุนยังไม่ generate revenue\nต้องถาม: Revenue trend โตตาม Capex ที่ลงไปไหม? Asset Turnover ปรับดีขึ้นไหม?\nถ้าไม่ = Capex allocation ไม่ efficient'
+  },
+];
+
+// =====================================================================
+// RATIO REF DATA
+// =====================================================================
+const ratioGroups = [
+  {
+    name: 'Profitability & Return',
+    rows: [
+      ['EBITDA Margin', 'EBITDA / Sales × 100%', 'สูง = ดี | Telecom~33% / Retail~6%', 'เปรียบเทียบข้ามบริษัท/ประเทศได้'],
+      ['EBIT Margin ⭐', 'EBIT / Sales × 100%', 'สูง = ดี | Focus หลักของ analyst', 'วัด core operating performance หลัง D&A'],
+      ['Gross Margin', 'Gross Profit / Sales × 100%', 'สูง = ดี | ดูก่อน overhead', 'สำคัญสำหรับ manufacturing'],
+      ['Net Profit Margin', 'Net Income / Sales × 100%', 'สูง = ดี | แต่ระวัง distortion', 'ถูกกระทบโดย leverage, ภาษี, non-recurring'],
+      ['ROCE ⭐⭐⭐', 'EBIT×(1-t) / CE × 100%', 'ROCE > WACC = สร้าง value ✅', 'ต้องเทียบกับ WACC เสมอ!'],
+      ['ROE', 'Net Income / Equity × 100%', 'ดูที่มา: มาจาก ROCE หรือ D/E?', 'ROE สูงจาก D/E สูง = เสี่ยง'],
+      ['Asset Turnover', 'Sales / Capital Employed', 'สูง = Asset-light | Retail~3x / Telecom~0.5x', 'ประกอบกับ margin เพื่อเข้าใจ ROCE'],
+    ]
+  },
+  {
+    name: 'Liquidity',
+    rows: [
+      ['Current Ratio', 'Current Assets / Current Liabilities', '> 2x ดีมาก | > 1x พอ | < 1x ระวัง', 'Food retail อาจ < 1 ก็ยังโอเค'],
+      ['Quick Ratio (Acid Test)', '(Current Assets − Inventory) / CL', '> 1x ดี | < 0.5x อันตราย', 'Strict กว่า Current Ratio'],
+      ['Cash Ratio', '(Cash + Mkt Securities) / CL', 'ยิ่งสูงยิ่งดี | มักต่ำกว่า 1x', 'Strictest — ชำระหนี้ทันทีได้ไหม'],
+    ]
+  },
+  {
+    name: 'Efficiency / Activity (WC)',
+    rows: [
+      ['DSO ⭐', 'Receivables / Sales(+VAT) × 365', 'ลด = ดี (เก็บเงินเร็ว)', 'Sales รวม VAT เพราะ Receivables รวม VAT'],
+      ['DPO ⭐', 'Payables / Purchases(+VAT) × 365', 'เพิ่ม = ดี | ผิดปกติมาก = ระวัง', 'ใช้ Purchases ไม่ใช่ COGS'],
+      ['DIO', 'Inventory / Sales(excl.VAT) × 365', 'ลด = ดี (หมุนเวียนเร็ว)', 'Rough estimate — ใช้ COGS ถ้ามี'],
+      ['CCC ⭐', 'DSO + DIO − DPO', 'ยิ่งน้อยยิ่งดี | ติดลบ = ยอดเยี่ยม', 'Supermarket มักติดลบ 20–30 วัน'],
+      ['WC / Sales %', 'Op. Working Capital / Sales × 100%', 'ยิ่งน้อยยิ่งดี | ติดลบ = ดีมาก', '—'],
+      ['Capex / Sales %', 'Capital Expenditure / Sales × 100%', 'Software~2% / Mining~25%', 'วัดความ Capital Intensive'],
+    ]
+  },
+  {
+    name: 'Leverage & Solvency',
+    rows: [
+      ['Net Debt / EBITDA ⭐⭐', 'Net Debt / EBITDA', '< 2.5x safe | 2.5–5x caution | > 5x junk', 'Standard debt covenants ทั่วโลก'],
+      ['ICR ⭐⭐', 'EBIT / Net Interest Expense', '> 3x ดี | 2–3x borderline | < 2x อันตราย', 'Lenders ต้องการ > 3x'],
+      ['Gearing (D/E)', 'Net Debt / Shareholders\' Equity', '< 1x conventional safe', 'ปัจจุบันใช้น้อยลง'],
+      ['DSCR', 'EBITDA / (Interest + Principal)', '> 1.25x ดี | < 1.0x อันตราย', 'ใช้มากใน Project Finance'],
+      ['Debt Ratio %', 'Net Debt / (D+E) × 100%', 'สัดส่วนหนี้ในโครงสร้างทุน', 'เทียบกับ industry average'],
+    ]
+  },
+  {
+    name: 'Leverage Effect & Operating Leverage',
+    rows: [
+      ['ROCE (After-tax)', 'EBIT×(1-t) / CE', 'ROCE > i → Positive Leverage ✅', 'Base ของ Leverage Effect'],
+      ['After-tax Cost of Debt (i)', 'FE×(1-t) / Net Debt', 'ต่ำ = ต้นทุนหนี้ถูก', 'ดอกเบี้ยลดหย่อนภาษีได้ จึงคูณ (1-t)'],
+      ['Leverage Effect', '(ROCE − i) × D/E', 'บวก = ROCE > i ✅ | ลบ = ROCE < i ❌', 'ยิ่ง D/E สูง leverage รุนแรงขึ้น'],
+      ['DOL', '(Sales − VC) / EBIT = CM / EBIT', 'สูง = เสี่ยง: Sales ลด 1% → EBIT ลด DOL%', 'High Fixed Cost = High DOL'],
+      ['Breakeven Sales', 'Fixed Costs / CM Ratio (m)', 'ยิ่งต่ำยิ่งดี | Total BE ดีที่สุด', 'Margin of Safety = (Sales-BE)/Sales'],
+    ]
+  }
+];
+
+// =====================================================================
+// NAVIGATION
+// =====================================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { home:0, flashcard:1, quiz:2, ratioref:3, flowchart:4 };
+  if (map[id] !== undefined) tabs[map[id]].classList.add('active');
+  if (id === 'ratioref') renderRatioRef();
+  if (id === 'flowchart') renderFlowchart();
+  if (id === 'flashcard') initFlashcards();
+  if (id === 'quiz') initQuiz();
+}
+
+function openChapter(chId) {
+  const ch = chapters[chId];
+  if (!ch) return;
+  // sidebar
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = `<div class="sidebar-label">บทนี้</div>` + ch.sections.map((s,i) =>
+    `<div class="sidebar-item${i===0?' active':''}" onclick="showSection('${s.id}','${chId}',this)">${s.label}</div>`
+  ).join('');
+  // content
+  const area = document.getElementById('contentArea');
+  area.innerHTML = ch.sections.map((s,i) =>
+    `<div class="section${i===0?' active':''}" id="sec_${s.id}">
+      <div class="section-title">${ch.title}</div>
+      <div class="section-subtitle">${s.label}</div>
+      ${s.content}
+    </div>`
+  ).join('');
+  showPage('chapterView');
+  // fix nav tab
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab')[0].classList.add('active');
+}
+
+function showSection(secId, chId, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('sec_' + secId).classList.add('active');
+  el.classList.add('active');
+}
+
+// =====================================================================
+// FLASHCARDS
+// =====================================================================
+let fcCards = [], fcIdx = 0, fcGood = 0, fcBad = 0, fcFlipped = false;
+let fcFilter = 'all';
+
+function initFlashcards() {
+  // build filters
+  const chs = ['all', ...new Set(flashcardsData.map(c => c.ch))];
+  const filters = document.getElementById('fcFilters');
+  filters.innerHTML = chs.map(c =>
+    `<button class="filter-btn${c==='all'?' active':''}" onclick="setFcFilter('${c}',this)">${c==='all'?'ทั้งหมด':c}</button>`
+  ).join('');
+  resetFlashcards();
+}
+
+function setFcFilter(f, el) {
+  fcFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  resetFlashcards();
+}
+
+function resetFlashcards() {
+  fcCards = (fcFilter === 'all' ? flashcardsData : flashcardsData.filter(c => c.ch === fcFilter))
+    .map(c => ({...c})).sort(() => Math.random()-0.5);
+  fcIdx = 0; fcGood = 0; fcBad = 0;
+  document.getElementById('fcResult').style.display = 'none';
+  document.getElementById('cardWrap').style.display = 'flex';
+  document.getElementById('fcControls').style.display = 'flex';
+  showCard();
+}
+
+function showCard() {
+  if (fcIdx >= fcCards.length) { showFcResult(); return; }
+  const c = fcCards[fcIdx];
+  fcFlipped = false;
+  const inner = document.getElementById('cardInner');
+  inner.classList.remove('flipped');
+  document.getElementById('cardTag').textContent = `${c.ch} • ${fcIdx+1}/${fcCards.length}`;
+  document.getElementById('cardTagB').textContent = c.ch + ' — คำตอบ';
+  document.getElementById('cardQ').textContent = c.q;
+  const aEl = document.getElementById('cardA');
+  aEl.innerHTML = `<div>${c.a.replace(/\n/g,'<br>')}</div>` +
+    (c.formula ? `<div class="mono">${c.formula}</div>` : '');
+  document.getElementById('fcProgress').innerHTML = `<b>${fcIdx+1}</b>/${fcCards.length} — รู้แล้ว: <span class="good">${fcGood}</span> | ยังไม่แน่ใจ: <span class="bad">${fcBad}</span>`;
+}
+
+function flipCard() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('cardInner').classList.toggle('flipped', fcFlipped);
+}
+
+function rateCard(known) {
+  if (known) fcGood++; else fcBad++;
+  if (!known) fcCards.push(fcCards[fcIdx]); // re-add unknown
+  fcIdx++;
+  showCard();
+}
+
+function skipCard() {
+  fcCards.push(fcCards[fcIdx]);
+  fcIdx++;
+  showCard();
+}
+
+function showFcResult() {
+  document.getElementById('cardWrap').style.display = 'none';
+  document.getElementById('fcControls').style.display = 'none';
+  const res = document.getElementById('fcResult');
+  res.style.display = 'block';
+  const total = fcGood + fcBad;
+  const pct = total ? Math.round(fcGood/total*100) : 100;
+  document.getElementById('fcFinalScore').textContent = pct + '%';
+  document.getElementById('fcGood').textContent = fcGood;
+  document.getElementById('fcBad').textContent = fcBad;
+}
+
+// =====================================================================
+// QUIZ
+// =====================================================================
+let quizQ = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+let quizFilter = 'all', quizUserAns = [];
+
+function initQuiz() {
+  const chs = ['all', ...new Set(quizData.map(q => q.ch))];
+  const filters = document.getElementById('quizFilters');
+  filters.innerHTML = chs.map(c =>
+    `<button class="filter-btn${c==='all'?' active':''}" style="margin:4px 4px 4px 0" onclick="setQFilter('${c}',this)">${c==='all'?'ทั้งหมด':c}</button>`
+  ).join('');
+  startQuiz();
+}
+
+function setQFilter(f, el) {
+  quizFilter = f;
+  document.querySelectorAll('#quizFilters .filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  startQuiz();
+}
+
+function startQuiz() {
+  const pool = quizFilter === 'all' ? quizData : quizData.filter(q => q.ch === quizFilter);
+  quizQ = [...pool].sort(() => Math.random()-0.5);
+  quizIdx = 0; quizScore = 0; quizAnswered = false; quizUserAns = [];
+  document.getElementById('quizResult').classList.remove('visible');
+  document.getElementById('quizArea').style.display = 'block';
+  updateQuizBar();
+  renderQuizQ();
+}
+
+function updateQuizBar() {
+  document.getElementById('quizBar').style.width = (quizIdx/quizQ.length*100) + '%';
+}
+
+function renderQuizQ() {
+  if (quizIdx >= quizQ.length) { showQuizResult(); return; }
+  const q = quizQ[quizIdx];
+  quizAnswered = false;
+  const area = document.getElementById('quizArea');
+  area.innerHTML = `
+    <div class="quiz-q-block">
+      <div class="quiz-q-num">คำถาม ${quizIdx+1} / ${quizQ.length} — ${q.ch}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      ${q.context ? `<div class="quiz-q-context">${q.context}</div>` : ''}
+    </div>
+    <div class="quiz-choices" id="choices">
+      ${q.choices.map((c,i) => `<button class="quiz-choice" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${c}</button>`).join('')}
+    </div>
+    <div class="quiz-explanation" id="exp">
+      <div class="exp-label">✅ อธิบาย</div>
+      <div>${q.exp.replace(/\n/g,'<br>')}</div>
+    </div>
+    <div class="quiz-nav" id="qnav" style="display:none">
+      <button class="btn btn-primary" onclick="nextQ()">${quizIdx < quizQ.length-1 ? 'ข้อถัดไป →' : 'ดูผล 🎯'}</button>
+    </div>
+  `;
+}
+
+function answerQ(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQ[quizIdx];
+  const btns = document.querySelectorAll('.quiz-choice');
+  btns.forEach(b => b.disabled = true);
+  btns[q.ans].classList.add('correct');
+  if (i !== q.ans) { btns[i].classList.add('wrong'); } else { quizScore++; }
+  quizUserAns.push({ q: q.q, correct: i === q.ans, yourAns: q.choices[i], rightAns: q.choices[q.ans] });
+  document.getElementById('exp').classList.add('visible');
+  document.getElementById('qnav').style.display = 'flex';
+  updateNav();
+}
+
+function nextQ() {
+  quizIdx++;
+  updateQuizBar();
+  renderQuizQ();
+}
+
+function updateNav() {
+  document.getElementById('quizScoreNav').textContent = `${quizScore}/${quizQ.length}`;
+}
+
+function showQuizResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  const res = document.getElementById('quizResult');
+  res.classList.add('visible');
+  const pct = Math.round(quizScore/quizQ.length*100);
+  document.getElementById('resultScore').textContent = `${quizScore}/${quizQ.length}`;
+  document.getElementById('resultScore').style.color = pct >= 70 ? 'var(--accent2)' : pct >= 50 ? 'var(--accent5)' : 'var(--accent3)';
+  document.getElementById('resultLabel').textContent = pct >= 80 ? '🎉 ยอดเยี่ยม! พร้อมสอบแล้ว' : pct >= 60 ? '👍 ผ่าน แต่ทบทวนเพิ่มอีกนิด' : '📖 ทบทวนเนื้อหาอีกครั้งนะ';
+  document.getElementById('resultReview').innerHTML = quizUserAns.map(a =>
+    `<div class="result-item ${a.correct ? 'correct-item' : 'wrong-item'}">
+      <div class="result-q">${a.correct ? '✅' : '❌'} ${a.q}</div>
+      ${!a.correct ? `<div class="result-a">คุณตอบ: ${a.yourAns}<br>คำตอบที่ถูก: ${a.rightAns}</div>` : ''}
+    </div>`
+  ).join('');
+  updateNav();
+}
+
+// =====================================================================
+// RATIO REF
+// =====================================================================
+function renderRatioRef() {
+  document.getElementById('ratioRefContent').innerHTML = ratioGroups.map(g => `
+    <div class="ratio-group">
+      <div class="ratio-group-title">${g.name}</div>
+      <table class="ratio-table">
+        <tr><th>Ratio</th><th>สูตรคำนวณ</th><th>วิธีแปรผล / ค่าอ้างอิง</th><th>หมายเหตุ</th></tr>
+        ${g.rows.map(r => `<tr><td><strong>${r[0]}</strong></td><td class="mono">${r[1]}</td><td>${r[2]}</td><td style="color:var(--muted);font-size:12px">${r[3]}</td></tr>`).join('')}
+      </table>
+    </div>
+  `).join('');
+}
+
+// =====================================================================
+// FLOWCHART
+// =====================================================================
+function renderFlowchart() {
+  document.getElementById('flowContent').innerHTML = `
+    <div class="flow-section">
+      <h3>📈 Income Statement — จาก Net Sales ถึง Net Income</h3>
+      <div class="flow-chain">
+        <div class="flow-node">Net Sales</div>
+        <div class="flow-arrow">±</div>
+        <div class="flow-node">Δ Inventory</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight">PRODUCTION</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Raw Materials</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight">Gross Margin</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">External + Personnel</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight2" style="font-weight:700">EBITDA ⭐</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">D&A</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight2" style="font-weight:700">EBIT ⭐⭐</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Net Interest</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node">PBT</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Tax</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight3">Net Income</div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>💰 EBITDA → Free Cash Flow → Net Debt Change</h3>
+      <div class="flow-chain">
+        <div class="flow-node highlight2">EBITDA</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Δ WC</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight">Operating CF</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Capex</div>
+        <div class="flow-plus">+</div>
+        <div class="flow-node">Disposals</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight2">FCF (pre-tax)</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Interest + Tax</div>
+        <div class="flow-plus">+</div>
+        <div class="flow-node">Equity Δ</div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node">Dividends</div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight3">Net Debt Δ</div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>🏛️ Balance Sheet — CE = Invested Capital</h3>
+      <div class="flow-chain" style="gap:12px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="font-size:11px;color:var(--muted);text-align:center">สินทรัพย์ที่ลงทุน (CE)</div>
+          <div class="flow-node highlight">Fixed Assets</div>
+          <div class="flow-plus">+</div>
+          <div class="flow-node highlight">Working Capital</div>
+          <div class="flow-plus" style="color:var(--muted)">Receivables + Inventory</div>
+          <div class="flow-minus" style="color:var(--muted)">− Payables</div>
+        </div>
+        <div style="font-size:28px;color:var(--yellow);display:flex;align-items:center">=</div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="font-size:11px;color:var(--muted);text-align:center">แหล่งเงินทุน (Invested Capital)</div>
+          <div class="flow-node highlight2">Equity (E)</div>
+          <div class="flow-plus">+</div>
+          <div class="flow-node highlight2">Net Debt (D)</div>
+          <div style="font-size:11px;color:var(--muted)">Borrowings − Cash</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>📊 ROCE Decomposition</h3>
+      <div class="flow-chain">
+        <div class="flow-node highlight2">ROCE</div>
+        <div style="color:var(--muted);font-size:18px">=</div>
+        <div class="flow-node" style="text-align:center">Operating<br>Margin<br><span style="font-size:11px;color:var(--muted)">EBIT(1-t)/Sales</span></div>
+        <div style="color:var(--muted);font-size:18px">×</div>
+        <div class="flow-node" style="text-align:center">Asset<br>Turnover<br><span style="font-size:11px;color:var(--muted)">Sales/CE</span></div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>⚖️ Leverage Effect</h3>
+      <div class="flow-chain">
+        <div class="flow-node highlight2">ROE</div>
+        <div style="color:var(--muted);font-size:18px">=</div>
+        <div class="flow-node highlight">ROCE</div>
+        <div class="flow-plus">+</div>
+        <div class="flow-node" style="text-align:center">(ROCE − i)</div>
+        <div style="color:var(--muted);font-size:18px">×</div>
+        <div class="flow-node" style="text-align:center">D/E</div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:16px;flex-wrap:wrap">
+        <div class="stat-box" style="flex:1;min-width:200px">
+          <div class="label good">Positive Leverage</div>
+          <div style="font-size:13px;margin-top:8px;font-family:var(--mono)">ROCE &gt; i → ROE &gt; ROCE ✅</div>
+        </div>
+        <div class="stat-box" style="flex:1;min-width:200px">
+          <div class="label bad">Negative Leverage</div>
+          <div style="font-size:13px;margin-top:8px;font-family:var(--mono)">ROCE &lt; i → ROE &lt; ROCE ❌</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>🔄 Cash Conversion Cycle</h3>
+      <div class="flow-chain">
+        <div class="flow-node highlight" style="text-align:center">DSO<br><span style="font-size:10px">Recv/Sales×365</span></div>
+        <div class="flow-plus">+</div>
+        <div class="flow-node highlight" style="text-align:center">DIO<br><span style="font-size:10px">Inv/Sales×365</span></div>
+        <div class="flow-minus">−</div>
+        <div class="flow-node highlight2" style="text-align:center">DPO<br><span style="font-size:10px">Pay/Purch×365</span></div>
+        <div class="flow-equals">=</div>
+        <div class="flow-node highlight2" style="font-weight:700;text-align:center">CCC<br><span style="font-size:10px">ยิ่งน้อยยิ่งดี</span></div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>🗺️ 4-Stage Financial Analysis Roadmap (Ch.8)</h3>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:16px;font-style:italic">"Wealth creation requires investment that must be financed and provide sufficient return"</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px">
+        <div style="background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.3);border-radius:8px;padding:16px">
+          <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Stage 1 — Wealth Creation</div>
+          <div style="font-size:13px;line-height:1.7">
+            Sales Growth: Volume / Price / FX / Scope<br>
+            EBITDA & EBIT Margin trend<br>
+            Scissors Effect<br>
+            Operating Leverage & Breakeven
+          </div>
+        </div>
+        <div style="background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:8px;padding:16px">
+          <div style="font-size:11px;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Stage 2 — Investment</div>
+          <div style="font-size:13px;line-height:1.7">
+            Working Capital trend (DSO/DPO/DIO)<br>
+            Capex: Maintenance vs Growth<br>
+            Capex/Sales, Capex/D&A<br>
+            Asset Turnover
+          </div>
+        </div>
+        <div style="background:rgba(210,168,255,.08);border:1px solid rgba(210,168,255,.3);border-radius:8px;padding:16px">
+          <div style="font-size:11px;color:var(--accent4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Stage 3 — Financing</div>
+          <div style="font-size:13px;line-height:1.7">
+            Cash Flow Statement (Dynamic)<br>
+            Balance Sheet snapshot (Static)<br>
+            Net Debt/EBITDA, ICR, DSCR<br>
+            Debt maturity structure
+          </div>
+        </div>
+        <div style="background:rgba(255,166,87,.08);border:1px solid rgba(255,166,87,.3);border-radius:8px;padding:16px">
+          <div style="font-size:11px;color:var(--accent5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Stage 4 — Profitability</div>
+          <div style="font-size:13px;line-height:1.7">
+            ROCE vs WACC → Value Creation?<br>
+            ROE decomposition<br>
+            Leverage Effect analysis<br>
+            Solvency risk assessment
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div class="flow-node highlight" style="font-size:12px">Wealth Creation</div>
+        <div style="color:var(--muted)">→</div>
+        <div class="flow-node highlight" style="font-size:12px">Investment</div>
+        <div style="color:var(--muted)">→</div>
+        <div class="flow-node highlight2" style="font-size:12px">Financing</div>
+        <div style="color:var(--muted)">→</div>
+        <div class="flow-node highlight2" style="font-size:12px">Profitability</div>
+        <div style="color:var(--muted)">→</div>
+        <div class="flow-node highlight3" style="font-size:12px;font-weight:700">Conclusion</div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <h3>🔗 Revenue → Operating Receipts Reconciliation (Ch.5)</h3>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;line-height:2">
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-bottom:8px">P&L (Accrual)</div>
+          <div><strong>Net Sales</strong> (รับรู้เมื่อส่งมอบ)</div>
+          <div style="color:var(--muted)">± Change in Inventory</div>
+          <div>= PRODUCTION</div>
+          <div>− Raw Materials</div>
+          <div>= Gross Margin</div>
+          <div>− External + Personnel</div>
+          <div>= <strong style="color:var(--yellow)">EBITDA</strong></div>
+          <div>− D&A (non-cash!)</div>
+          <div>= <strong style="color:var(--accent5)">EBIT</strong></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;padding-top:30px">
+          <div style="font-size:20px;color:var(--accent)">↔</div>
+          <div style="font-size:11px;color:var(--muted);text-align:center">ปรับ<br>cash</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;line-height:2">
+          <div style="color:var(--muted);font-size:11px;text-transform:uppercase;margin-bottom:8px">Cash Flow (Reality)</div>
+          <div>Sales − Δ Receivables</div>
+          <div style="color:var(--muted)">= <strong style="color:var(--accent)">Operating Receipts</strong></div>
+          <div>COGS ± Δ Inventory − Δ Payables</div>
+          <div>= Cash paid suppliers</div>
+          <div>+ D&A บวกกลับ</div>
+          <div>= <strong style="color:var(--accent)">Operating CF</strong></div>
+          <div>− Capex</div>
+          <div>= <strong style="color:var(--accent2)">Free Cash Flow</strong></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// init
+renderRatioRef();
+renderFlowchart();
+</script>
+</body>
+</html>
